@@ -6,20 +6,19 @@ import androidx.fragment.app.FragmentPagerAdapter
 
 class MyFragmentPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
-    private val fragmentlist: MutableList<Fragment> = ArrayList()
+    private val fragmentList: MutableList<Fragment> = ArrayList()
     private val titleList: MutableList<String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
-        return fragmentlist[position]
+        return fragmentList[position]
     }
 
     override fun getCount(): Int {
-        return fragmentlist.size
+        return fragmentList.size
     }
 
    fun addFragment(fragment: Fragment, title:String){
-       println("add fragment ${title}")
-       fragmentlist.add(fragment)
+       fragmentList.add(fragment)
        titleList.add(title)
    }
 

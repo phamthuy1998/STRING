@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.IntroActivity">
+    tools:context=".features.intro.activity.IntroActivity">
 
     <TextView
         android:id="@+id/btn_skip_intro"
@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/ripple_button"
-        android:padding="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="10dp"
         android:text="@string/skip"
         android:textColor="@color/colorPurple"
         android:textStyle="bold"
@@ -25,22 +26,75 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbarThumbVertical="@color/colorPurple"
-        app:layout_constraintBottom_toTopOf="@id/btn_next"
+        app:layout_constraintBottom_toTopOf="@id/viewPagerIndicatorIconsLayout"
+        android:layout_marginBottom="@dimen/margin15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_skip_intro" />
 
-    <Button
+    <!--    <com.google.android.material.tabs.TabLayout-->
+    <!--        android:id="@+id/tabDots"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/btn_next"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:tabBackground="@drawable/tab_intro_selector"-->
+    <!--        app:tabGravity="center"-->
+    <!--        app:tabIndicatorHeight="0dp" />-->
+
+    <LinearLayout
+        android:id="@+id/viewPagerIndicatorIconsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/btn_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/firstDotImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_dot_selected" />
+
+        <ImageView
+            android:id="@+id/secondDotImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_dot" />
+
+        <ImageView
+            android:id="@+id/thirdDotImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_dot" />
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/btn_next"
+        style="@style/txtWhiteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/ripple_button"
         android:backgroundTint="@color/colorBack"
+        android:clickable="true"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp"
         android:text="@string/btn_next"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

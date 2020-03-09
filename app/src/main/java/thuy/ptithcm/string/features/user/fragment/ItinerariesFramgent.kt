@@ -1,4 +1,4 @@
-package thuy.ptithcm.string.fragment
+package thuy.ptithcm.string.features.user.fragment
 
 
 import android.os.Bundle
@@ -12,14 +12,14 @@ import thuy.ptithcm.string.R
 /**
  * A simple [Fragment] subclass.
  */
-class NotificationFragment : Fragment() {
+class ItinerariesFramgent : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false)
+        return inflater.inflate(R.layout.fragment_itineraries, container, false)
     }
 
 

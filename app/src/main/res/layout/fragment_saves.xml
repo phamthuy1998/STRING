@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.SavesFragment">
+    tools:context=".features.user.fragment.SavesFragment">
 
     <include layout="@layout/saves_empty" />
 </LinearLayout>

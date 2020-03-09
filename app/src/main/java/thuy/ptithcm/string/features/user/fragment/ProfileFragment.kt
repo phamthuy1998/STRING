@@ -1,12 +1,10 @@
-package thuy.ptithcm.string.fragment
+package thuy.ptithcm.string.features.user.fragment
 
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_wanderlust_profile.view.*

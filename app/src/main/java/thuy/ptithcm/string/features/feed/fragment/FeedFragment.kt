@@ -1,4 +1,5 @@
-package thuy.ptithcm.string.features.intro
+package thuy.ptithcm.string.features.feed.fragment
+
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,14 +9,18 @@ import android.view.ViewGroup
 
 import thuy.ptithcm.string.R
 
-class Intro1Fragment : Fragment() {
+/**
+ * A simple [Fragment] subclass.
+ */
+class FeedFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_intro1, container, false)
+        return inflater.inflate(R.layout.item_interest, container, false)
     }
+
 
 }

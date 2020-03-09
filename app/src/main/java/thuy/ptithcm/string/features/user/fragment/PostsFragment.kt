@@ -1,4 +1,4 @@
-package thuy.ptithcm.string.fragment
+package thuy.ptithcm.string.features.user.fragment
 
 
 import android.os.Bundle
