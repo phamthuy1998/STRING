@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_register_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/txtToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_account"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="@drawable/ripple_button"
+                android:backgroundTint="@color/colorPurple"
+                android:text="@string/done"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/line_under_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ECEDEE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                style="@style/txInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:gravity="center"
+                android:text="@string/content_register_facebook"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_under_toolbar" />
+
+            <TextView
+                android:id="@+id/tv_username_facebook"
+                style="@style/txtTileNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="21dp"
+                android:text="@string/username"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+            <EditText
+                android:id="@+id/edt_user_name_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="@color/colorTransparent"
+                android:hint="@string/hint_edt_user_name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:textAppearance="@style/txInput"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_username_facebook" />
+
+            <TextView
+                android:id="@+id/line_under_username_fb"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_user_name_facebook" />
+
+
+            <TextView
+                android:id="@+id/tv_name_fb"
+                style="@style/txtTileNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:text="@string/name"
+                app:layout_constraintStart_toStartOf="@id/line_under_username_fb"
+                app:layout_constraintTop_toBottomOf="@id/line_under_username_fb" />
+
+            <EditText
+                android:id="@+id/edt_name_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="@color/colorTransparent"
+                android:hint="@string/hint_edt_name"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textAppearance="@style/txInput"
+                app:layout_constraintStart_toStartOf="@id/tv_name_fb"
+                app:layout_constraintTop_toBottomOf="@id/tv_name_fb" />
+
+            <TextView
+                android:id="@+id/tv_line_under_name_fb"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE"
+                app:layout_constraintTop_toBottomOf="@id/edt_name_register" />
+
+            <TextView
+                android:id="@+id/tv_day_of_birth_fb"
+                style="@style/txtTileNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:text="@string/date_of_birth"
+                app:layout_constraintStart_toStartOf="@id/tv_line_under_name_fb"
+                app:layout_constraintTop_toBottomOf="@id/tv_line_under_name_fb" />
+
+            <EditText
+                android:id="@+id/edt_day_of_birth_fb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="@color/colorTransparent"
+                android:enabled="false"
+                android:hint="@string/hint_edt_birthday"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textAppearance="@style/txInput"
+                app:layout_constraintStart_toStartOf="@id/tv_day_of_birth_fb"
+                app:layout_constraintTop_toBottomOf="@id/tv_day_of_birth_fb" />
+
+            <TextView
+                android:id="@+id/tv_line_under_birth_fb"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_day_of_birth_fb" />
+
+
+            <CheckBox
+                android:id="@+id/cb_terms_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="19dp"
+                android:button="@drawable/ic_checkbox_selected"
+                android:checked="false"
+                android:padding="@dimen/padding_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_line_under_birth_fb" />
+
+            <TextView
+                android:id="@+id/tv_agree_fb"
+                style="@style/txInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/agree_term"
+                app:layout_constraintBottom_toTopOf="@id/tv_term_service_fb"
+                app:layout_constraintStart_toEndOf="@id/cb_terms_fb"
+                app:layout_constraintTop_toTopOf="@id/cb_terms_fb" />
+
+            <TextView
+                android:id="@+id/tv_term_service_fb"
+                style="@style/txtTileNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_of_service"
+                android:textColor="@color/colorPurple"
+                app:layout_constraintBottom_toBottomOf="@id/cb_terms_fb"
+                app:layout_constraintStart_toStartOf="@id/tv_agree_fb"
+                app:layout_constraintTop_toBottomOf="@id/tv_agree_fb" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

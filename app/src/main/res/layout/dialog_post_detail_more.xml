@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_cancel_dl_post_detail_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin15"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/button_back"
+            android:padding="@dimen/margin15"
+            android:src="@drawable/ic_cancel" />
+
+        <TextView
+            style="@style/txtHeaderNormalGray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal|top"
+            android:text="@string/more"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/btn_edit_post_dl"
+        style="@style/txtTileBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/edit_post" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="#ECEDEE" />
+
+    <TextView
+        android:id="@+id/btn_share_detail_dl"
+        style="@style/txtTileBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/share_to" />
+
+    <TextView
+        android:id="@+id/btn_coppy_link_dl"
+        style="@style/txtTileBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/copy_link" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="#ECEDEE" />
+
+    <TextView
+        android:id="@+id/btn_delete_post_dl"
+        style="@style/txtTileBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="@dimen/margin15"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/delete"
+        android:textColor="@color/colorRed" />
+</LinearLayout>

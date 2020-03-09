@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin15">15dp</dimen>
+    <dimen name="marginDefault">10dp</dimen>
+    <dimen name="padding_btn">15dp</dimen>
+    <dimen name="imAvtWidth">76dp</dimen>
+    <dimen name="imAvtHeight">76dp</dimen>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/margin15"
+        android:layout_marginBottom="@dimen/margin15"
+        android:layout_weight="0.5">
+
+        <ImageView
+            android:id="@+id/iv_interest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/image_item"
+            android:src="@drawable/img_medium" />
+
+        <CheckBox
+            android:id="@+id/cb_interest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|top"
+            android:background="@drawable/item_interest_selector"
+            android:button="@drawable/checkbox_interest_selector"
+            android:gravity="end|top" />
+
+        <TextView
+            android:id="@+id/tv_title_interest"
+            style="@style/txtWhiteBig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:text="@string/culture"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+</LinearLayout>

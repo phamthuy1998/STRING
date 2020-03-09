@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/btn_cancel_dialog_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:contentDescription="@string/button_back"
+        android:padding="@dimen/margin15"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/txtHeaderNormalGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal|top"
+        android:text="@string/turn_on_location_service"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="@id/btn_cancel_dialog_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_cancel_dialog_profile" />
+
+    <TextView
+        android:id="@+id/tv_title_dialog"
+        style="@style/txtTileNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="39dp"
+        android:text="@string/turn_on_wanderlust_mode"
+        app:layout_constraintStart_toStartOf="@id/btn_cancel_dialog_profile"
+        app:layout_constraintTop_toBottomOf="@id/btn_cancel_dialog_profile" />
+
+    <TextView
+        android:id="@+id/tv_explain"
+        style="@style/txtHeaderNormalGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="5dp"
+        android:text="@string/str_dialog_profile"
+        app:layout_constraintStart_toStartOf="@id/btn_cancel_dialog_profile"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_dialog" />
+
+    <TextView
+        android:id="@+id/line_under_explain"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="#ECEDEE"
+        app:layout_constraintStart_toStartOf="@id/btn_cancel_dialog_profile"
+        app:layout_constraintTop_toBottomOf="@id/tv_explain" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        style="@style/txtTileNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="42dp"
+        android:drawableStart="@drawable/ic_location"
+        android:drawablePadding="10dp"
+        android:text="@string/location"
+        app:layout_constraintStart_toStartOf="@id/btn_cancel_dialog_profile"
+        app:layout_constraintTop_toBottomOf="@id/line_under_explain" />
+
+    <EditText
+        android:id="@+id/edt_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="@color/colorTransparent"
+        android:hint="@string/hint_location"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textAppearance="@style/txInput"
+        app:layout_constraintStart_toStartOf="@id/btn_cancel_dialog_profile"
+        app:layout_constraintTop_toBottomOf="@id/tv_location" />
+
+    <TextView
+        android:id="@+id/line_under_edt_location"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="#ECEDEE"
+        app:layout_constraintStart_toStartOf="@id/btn_cancel_dialog_profile"
+        app:layout_constraintTop_toBottomOf="@id/edt_location" />
+
+    <Button
+        android:id="@+id/btn_done_dialog"
+        style="@style/txtWhiteBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="@dimen/margin15"
+        android:layout_marginEnd="67dp"
+        android:layout_marginBottom="@dimen/margin15"
+        android:background="@drawable/ripple_button"
+        android:backgroundTint="@color/colorPurple"
+        android:text="@string/done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line_under_edt_location" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

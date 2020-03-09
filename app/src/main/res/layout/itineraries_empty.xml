@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/intro1"
+        android:src="@drawable/ic_itineraries_empty" />
+
+    <TextView
+        style="@style/txtSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin15"
+        android:gravity="center_horizontal|top"
+        android:text="@string/no_itineraries"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <TextView
+        style="@style/txtHeaderBigGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin15"
+        android:gravity="center_horizontal|top"
+        android:text="@string/txtNoItine" />
+
+    <LinearLayout
+        android:id="@+id/btn_create_new_itinerary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="@dimen/margin15"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="@dimen/margin15"
+        android:background="@drawable/ripple_stroke_purple_button"
+        android:clickable="true"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/button_back"
+            android:src="@drawable/ic_plus" />
+
+        <TextView
+            style="@style/txtPurple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/padding_btn"
+            android:text="@string/create_new_itinerary" />
+
+    </LinearLayout>
+
+</LinearLayout>

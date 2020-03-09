@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/txtHeaderNormalGray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal|top"
+            android:text="@string/confirm_delete"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_cancel_dl_modeal_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/button_back"
+            android:padding="@dimen/margin15"
+            android:src="@drawable/ic_cancel" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/btn_edit_post_dl"
+        style="@style/txtNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/txt_modal_delete" />
+
+
+    <TextView
+        android:id="@+id/btn_delete_post_modal_dl"
+        style="@style/txtTileBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/delete"
+        android:textColor="@color/colorRed" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="#ECEDEE" />
+
+    <TextView
+        android:id="@+id/btn_cancel_modal_dl"
+        style="@style/txtTileBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/cancel" />
+
+</LinearLayout>
