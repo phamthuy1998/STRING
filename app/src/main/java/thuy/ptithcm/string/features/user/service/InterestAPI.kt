@@ -14,7 +14,7 @@ interface InterestAPI {
     @PUT("users-interest-categories-select")
     fun putInterest(
         @Header("Authorization") authorization: String,
-        @Query("lists_interest") user_id: String
+        @Query("lists_interest[]") listsInterest: ArrayList<Int>
     ): Call<UserData>
 
 }

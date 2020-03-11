@@ -19,7 +19,6 @@ import thuy.ptithcm.string.databinding.FragmentForgotPasswordBinding
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
 import thuy.ptithcm.string.utils.hideKeyboard
 import thuy.ptithcm.string.utils.isValidEmail
-import java.util.*
 
 
 class ForgotPasswordFragment : Fragment() {
@@ -29,7 +28,6 @@ class ForgotPasswordFragment : Fragment() {
             .of(activity!!)
             .get(UserViewModel::class.java)
     }
-    private var timer = Timer()
     private var isClickForgotPW = false
 
     override fun onCreateView(

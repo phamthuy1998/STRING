@@ -12,7 +12,7 @@ data class InterestData(
 
 data class Interest(
     @SerializedName("check_user_sellect")
-    val checkUserSelect: Int?,
+    var checkUserSelect: Int?,
     @SerializedName("created_at")
     val createdAt: String?,
     val id: Int?,

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".features.user.activity.SettingActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/btn_back_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/button_back"
+                android:padding="10dp"
+                android:src="@drawable/ic_right_dark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/txtToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tv_line_under_name"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECEDEE" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/btn_edit_profile"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin15"
+                android:drawableStart="@drawable/ic_user"
+                android:drawableEnd="@drawable/ic_user"
+                android:drawablePadding="@dimen/margin15"
+                android:text="@string/edit_profile" />
+
+            <TextView
+                android:id="@+id/btn_share_app_with_friends"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/share_app_with_frieds" />
+
+            <TextView
+                android:id="@+id/btn_follow_facebook"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/follow_us_on_facebook" />
+
+            <TextView
+                android:id="@+id/btn_follow_instagram"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/follow_us_on_instagram" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE" />
+
+            <TextView
+                style="@style/txtHeaderNormalGray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin15"
+                android:text="@string/account" />
+
+            <TextView
+                android:id="@+id/btn_my_interest"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/my_interests" />
+
+            <TextView
+                android:id="@+id/btn_acc_detail"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/account_details" />
+
+            <TextView
+                android:id="@+id/btn_change_password"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/change_password" />
+
+            <TextView
+                android:id="@+id/btn_put_notification"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/push_notifications" />
+
+            <TextView
+                android:id="@+id/btn_bock_acc"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/blocked_accounts" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE" />
+
+            <TextView
+                style="@style/txtHeaderNormalGray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin15"
+                android:text="@string/about" />
+
+            <TextView
+                android:id="@+id/btn_term_off_service"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/terms_of_service" />
+
+            <TextView
+                android:id="@+id/btn_privacy_policy"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/privacy_policy" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE" />
+
+            <TextView
+                style="@style/txtHeaderNormalGray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin15"
+                android:text="@string/support" />
+
+            <TextView
+                android:id="@+id/btn_contact_us"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/contact_us" />
+
+
+            <TextView
+                android:id="@+id/btn_send_feedback"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:layout_marginBottom="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_arrow_right"
+                android:text="@string/send_feedback" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE" />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/btn_dell_acc"
+                    style="@style/txtTileBig"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin15"
+                    android:layout_marginTop="@dimen/margin15"
+                    android:layout_marginEnd="@dimen/margin15"
+                    android:layout_marginBottom="@dimen/margin15"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    android:text="@string/delete_account" />
+
+                <ProgressBar
+                    android:id="@+id/progressbar_logout"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE" />
+
+
+            <TextView
+                android:id="@+id/btn_log_out"
+                style="@style/txtTileBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:gravity="center"
+                android:padding="@dimen/margin15"
+                android:text="@string/log_out"
+                android:textColor="@color/colorPurple" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="#ECEDEE" />
+
+            <TextView
+                android:id="@+id/tv_version"
+                style="@style/txtHeaderNormalGray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin15"
+                android:text="@string/version" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:textColor="@color/colorPurple" android:drawable="@drawable/ripple_stroke_purple_button" android:state_selected="true"  />
+    <item android:textColor="@color/colorWhite" android:drawable="@drawable/ripple_purple_button" android:state_selected="false"/>
+</selector>

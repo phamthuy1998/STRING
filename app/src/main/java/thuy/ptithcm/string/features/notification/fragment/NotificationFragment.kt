@@ -14,6 +14,14 @@ import thuy.ptithcm.string.R
  */
 class NotificationFragment : Fragment() {
 
+    companion object {
+        private var instance: NotificationFragment? = null
+        fun getInstance(): NotificationFragment {
+            if (instance == null) instance = NotificationFragment()
+            return instance!!
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

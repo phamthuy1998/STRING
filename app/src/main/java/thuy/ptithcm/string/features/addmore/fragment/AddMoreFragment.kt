@@ -14,6 +14,14 @@ import thuy.ptithcm.string.R
  */
 class AddMoreFragment : Fragment() {
 
+    companion object {
+        private var instance: AddMoreFragment? = null
+        fun getInstance(): AddMoreFragment {
+            if (instance == null) instance = AddMoreFragment()
+            return instance!!
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

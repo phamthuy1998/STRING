@@ -9,17 +9,22 @@ import android.view.ViewGroup
 
 import thuy.ptithcm.string.R
 
-/**
- * A simple [Fragment] subclass.
- */
 class FeedFragment : Fragment() {
+
+    companion object {
+        private var instance: FeedFragment? = null
+        fun getInstance(): FeedFragment {
+            if (instance == null) instance = FeedFragment()
+            return instance!!
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.item_interest, container, false)
+        return inflater.inflate(R.layout.fragment_feed, container, false)
     }
 
 

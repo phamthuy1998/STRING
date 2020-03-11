@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/txtSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal|top"
+        android:text="@string/feed_is_empty"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <TextView
+        style="@style/txtHeaderBigGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin15"
+        android:gravity="center_horizontal|top"
+        android:text="@string/text_no_internet" />
+
+    <LinearLayout
+        android:id="@+id/btn_follow_people"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="@dimen/margin15"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/bg_stroke_purple_rounded"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/button_back"
+            android:src="@drawable/ic_plus" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:padding="@dimen/padding_btn"
+            android:text="@string/follow_people"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPurple"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

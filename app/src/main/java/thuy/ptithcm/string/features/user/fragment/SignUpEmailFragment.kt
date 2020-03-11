@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -38,6 +39,7 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
     private lateinit var password: String
     private lateinit var confirmPassword: String
     private var isTextOk = false
+    private var cbTerm = false
     private var isRegisterOk = false
 
     private val userViewModel: UserViewModel by lazy {
@@ -97,17 +99,46 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
         edt_day_of_birth_register.addTextChangedListener(this)
         edt_confirm_password_register.addTextChangedListener(this)
         edt_password_register.addTextChangedListener(this)
-        edt_user_name_register.addTextChangedListener(this)
+        edt_user_name_register.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                tv_username_count.text = (30 - s.toString().length).toString()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                tv_username_count.text = (30 - count).toString()
+                email = edt_email_register.text.trim().toString()
+                name = edt_name_register.text.trim().toString()
+                dayOfBirth = edt_day_of_birth_register.text.trim().toString()
+                password = edt_password_register.text.trim().toString()
+                confirmPassword = edt_confirm_password_register.text.trim().toString()
+                userName = edt_user_name_register.text.trim().toString()
+                isTextOk =
+                    userName != "" && email != "" && name != "" && dayOfBirth != "" && password != "" && confirmPassword != ""
+                if (cbTerm && isTextOk) {
+                    btn_sign_up.isEnabled = true
+                    btn_sign_up.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPurple)
+                } else {
+                    btn_sign_up.isEnabled = false
+                    btn_sign_up.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorGrayEnable)
+                }
+            }
+        })
 
         // Show dialog day time
         edt_day_of_birth_register.setOnClickListener {
             it.hideKeyboard()
-            showDatetimePicker()
+            showDatetimePicker(edt_day_of_birth_register)
         }
 
         // Checkbox listener
         cb_terms_register.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked && isTextOk) {
+            cbTerm = isChecked
+            if (cbTerm && isTextOk) {
                 btn_sign_up.isEnabled = true
                 btn_sign_up.backgroundTintList =
                     ContextCompat.getColorStateList(requireContext(), R.color.colorPurple)
@@ -127,14 +158,14 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
         ll_register.setOnClickListener { it.hideKeyboard() }
     }
 
-    private fun showDatetimePicker() {
+     private fun showDatetimePicker(editText: EditText) {
         var cal = Calendar.getInstance()
         var yyyy = cal.get(Calendar.YEAR)
         var mm = cal.get(Calendar.MONTH)
         var dd = cal.get(Calendar.DAY_OF_MONTH)
 
-        if (edt_day_of_birth_register.text.trim().toString() != "") {
-            val dateArr = edt_day_of_birth_register.text.trim().toString().split("/")
+        if (editText.text.trim().toString() != "") {
+            val dateArr = editText.text.trim().toString().split("/")
             yyyy = dateArr[2].toInt()
             mm = dateArr[1].toInt() - 1
             dd = dateArr[0].toInt()
@@ -150,30 +181,21 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
                 if (date1.length == 1) date1 = "0$date1"
                 if (month1.length == 1) month1 = "0$month1"
                 val date = "$date1/$month1/$yearDl"
-                edt_day_of_birth_register.setText(date)
+                editText.setText(date)
             }, yyyy, mm, dd
         )
         cal = Calendar.getInstance()
-        yyyy = cal.get(Calendar.YEAR)
-        mm = cal.get(Calendar.MONTH)
-        dd = cal.get(Calendar.DAY_OF_MONTH)
-
         // Set min date
         cal[Calendar.MONTH] = cal.get(Calendar.MONTH)
         cal[Calendar.DAY_OF_MONTH] = cal.get(Calendar.DAY_OF_MONTH)
         cal[Calendar.YEAR] = cal.get(Calendar.YEAR) - 100
 
         cal = Calendar.getInstance()
-        yyyy = cal.get(Calendar.YEAR)
-        mm = cal.get(Calendar.MONTH)
-        dd = cal.get(Calendar.DAY_OF_MONTH)
-
         // Set max date
         cal[Calendar.MONTH] = cal.get(Calendar.MONTH)
         cal[Calendar.DAY_OF_MONTH] = cal.get(Calendar.DAY_OF_MONTH)
         cal[Calendar.YEAR] = cal.get(Calendar.YEAR) - 14
         dpd.datePicker.maxDate = cal.timeInMillis
-
         dpd.show()
     }
 
@@ -230,5 +252,14 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
         userName = edt_user_name_register.text.trim().toString()
         isTextOk =
             userName != "" && email != "" && name != "" && dayOfBirth != "" && password != "" && confirmPassword != ""
+        if (cbTerm && isTextOk) {
+            btn_sign_up.isEnabled = true
+            btn_sign_up.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.colorPurple)
+        } else {
+            btn_sign_up.isEnabled = false
+            btn_sign_up.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.colorGrayEnable)
+        }
     }
 }

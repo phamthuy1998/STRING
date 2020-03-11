@@ -136,24 +136,37 @@
                     android:layout_marginStart="@dimen/margin15"
                     android:layout_marginTop="21dp"
                     android:layout_marginEnd="@dimen/margin15"
-                    android:text="@{userViewModel.email}"
                     android:afterTextChanged="@{(editable)-> userViewModel.setEmail(editable)}"
                     android:background="@color/colorTransparent"
                     android:hint="@string/hint_email"
                     android:importantForAutofill="yes"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:text="@{userViewModel.email}"
                     android:textAppearance="@style/txInput" />
 
-                <TextView
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/margin15"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginEnd="@dimen/margin15"
-                    android:background="#ECEDEE"
-                    app:layout_constraintStart_toStartOf="@id/edt_email_register"
-                    app:layout_constraintTop_toBottomOf="@id/edt_email_register" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/margin15"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginEnd="@dimen/margin15"
+                        android:background="#ECEDEE"
+                        app:layout_constraintStart_toStartOf="@id/edt_email_register"
+                        app:layout_constraintTop_toBottomOf="@id/edt_email_register" />
+
+                    <ProgressBar
+                        android:id="@+id/progressbarLogin"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
 
                 <TextView
                     style="@style/txtTileNormal"
@@ -162,6 +175,7 @@
                     android:layout_marginStart="@dimen/margin15"
                     android:layout_marginTop="21dp"
                     android:text="@string/password" />
+
 
                 <EditText
                     android:id="@+id/edt_password_login"

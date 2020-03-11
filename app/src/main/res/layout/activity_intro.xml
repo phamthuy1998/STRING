@@ -32,18 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_skip_intro" />
 
-    <!--    <com.google.android.material.tabs.TabLayout-->
-    <!--        android:id="@+id/tabDots"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/btn_next"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:tabBackground="@drawable/tab_intro_selector"-->
-    <!--        app:tabGravity="center"-->
-    <!--        app:tabIndicatorHeight="0dp" />-->
-
     <LinearLayout
         android:id="@+id/viewPagerIndicatorIconsLayout"
         android:layout_width="wrap_content"

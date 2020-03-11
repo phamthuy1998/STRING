@@ -3,19 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="1">
+    android:orientation="horizontal">
 
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/margin15"
-        android:layout_marginBottom="@dimen/margin15"
         android:layout_weight="0.5">
 
         <ImageView
             android:id="@+id/iv_interest"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:contentDescription="@string/image_item"
@@ -25,17 +22,27 @@
             android:id="@+id/cb_interest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/gradient_item_interest"
+            android:button="@null" />
+
+        <ImageView
+            android:id="@+id/im_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|top"
-            android:background="@drawable/item_interest_selector"
-            android:button="@drawable/checkbox_interest_selector"
-            android:gravity="end|top" />
+            android:layout_marginTop="@dimen/margin15"
+            android:layout_marginEnd="@dimen/margin15"
+            android:background="@drawable/ic_checkbox"
+            android:contentDescription="@string/checkbox" />
 
         <TextView
             android:id="@+id/tv_title_interest"
-            style="@style/txtWhiteBig"
+            style="@style/txtWhiteSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
+            android:layout_gravity="top|start"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:text="@string/culture"
             android:textStyle="bold" />
     </FrameLayout>

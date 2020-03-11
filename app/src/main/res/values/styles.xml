@@ -1,0 +1,150 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorTransparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:colorControlHighlight">@color/colorClickAble</item>
+    </style>
+
+    <style name="ProfileTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorTransparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorControlHighlight">@color/colorClickAble</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/background_launcher</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+    <style name="txtHeader">
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+    <style name="txtHeaderNormalGray">
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#9597A2</item>
+    </style>
+
+    <style name="txtHeaderBigGray">
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#9597A2</item>
+    </style>
+
+    <style name="txtSmall">
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+    <style name="txtWhiteBig">
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
+    <style name="txtWhiteSmall">
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
+    <style name="txtSmallGray">
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#9597A2</item>
+    </style>
+
+    <style name="txtToolbar">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+    <style name="txtTileNormal">
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+    <style name="txtTileBig">
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+    <style name="tabLayout">
+        <item name="tabTextAppearance">@style/txtTileNormal</item>
+        <item name="tabRippleColor">@color/colorClickAble</item>
+        <item name="tabIndicatorColor">@color/colorPurple</item>
+    </style>
+
+    <style name="txtTile1">
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+
+    <style name="txtWhiteBtn">
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="txtBtnFollow">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+
+    <style name="txInput">
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:textColorHint">#9597A2</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+    <style name="txtNormal">
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#04040F</item>
+    </style>
+
+    <style name="txtPurple">
+        <item name="android:lineSpacingExtra">1sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#933DEC</item>
+    </style>
+
+    <style name="ThemeDialog" parent="@style/Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+</resources>

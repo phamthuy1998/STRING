@@ -16,7 +16,10 @@ class UserViewModel : ViewModel() {
     val dataLogin = MutableLiveData<UserData>().apply { value = null }
     val dataRegister = MutableLiveData<UserData>().apply { value = null }
     val dataForgotPassword = MutableLiveData<UserData>().apply { value = null }
+    val dataUserProfile = MutableLiveData<UserData>().apply { value = null }
+    val dataUserChange = MutableLiveData<UserData>().apply { value = null }
     val dataResendEmail = MutableLiveData<UserData>().apply { value = null }
+    val dataLogout = MutableLiveData<UserData>().apply { value = null }
     var email = MutableLiveData<String>().apply { value = "" }
     private var emailRegister = MutableLiveData<String>().apply { value = "" }
     private var code = MutableLiveData<String>().apply { value = "" }
@@ -25,15 +28,17 @@ class UserViewModel : ViewModel() {
     }
 
     fun setEmailRegister(_email: String) {
-        emailRegister.value = _email.toString()
+        emailRegister.value = _email
     }
+
     fun getEmailRegister(): String? {
         return emailRegister.value.toString()
     }
 
     fun setCode(_code: String) {
-        code.value = _code.toString()
+        code.value = _code
     }
+
     fun getCode(): String? {
         return code.value.toString()
     }
@@ -45,7 +50,10 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataLogin.value = it
-                }, {})
+                }, {
+                    dataLogin.value?.message = it.message
+                    dataLogin.value?.status = false
+                })
         )
     }
 
@@ -56,6 +64,28 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataForgotPassword.value = it
+                }, {})
+        )
+    }
+
+    fun getUserProfile(accessToken: String, usersID: Int) {
+        compo.add(
+            apiManager.getUserProfile(accessToken, usersID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    dataUserProfile.value = it
+                }, {})
+        )
+    }
+
+    fun logOut(accessToken: String) {
+        compo.add(
+            apiManager.logOut(accessToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    dataLogout.value = it
                 }, {})
         )
     }
@@ -71,6 +101,33 @@ class UserViewModel : ViewModel() {
         )
     }
 
+    fun changeProfile(
+        file: String,
+        username: String,
+        bio: String,
+        website: String,
+        name: String,
+        dayOfBirth: String,
+        accessToken: String
+    ) {
+        compo.add(
+            apiManager.changeProfile(
+                file,
+                username,
+                bio,
+                website,
+                name,
+                dayOfBirth,
+                accessToken
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    dataUserChange.value = it
+                }, {})
+        )
+    }
+
     fun registerAccByEmail(
         username: String,
         name: String,
@@ -79,9 +136,11 @@ class UserViewModel : ViewModel() {
         password: String,
         confirmPassword: String
     ) {
-        Log.d("aaaa",  username+"|"+
-                name+"|"+ dayOfBirth+"|"+ email+"|"+
-                password+"|"+ confirmPassword )
+        Log.d(
+            "aaaa", username + "|" +
+                    name + "|" + dayOfBirth + "|" + email + "|" +
+                    password + "|" + confirmPassword
+        )
         compo.add(
             apiManager.registerAccByEmail(
                 username,

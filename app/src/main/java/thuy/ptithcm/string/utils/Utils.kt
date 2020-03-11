@@ -1,7 +1,13 @@
 package thuy.ptithcm.string.utils
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 
 
 fun View.hideKeyboard() {
@@ -28,4 +34,24 @@ fun isValidPhoneNumber(input: String): Boolean {
 
 fun isValidUrl(input: String): Boolean {
     return input.trim().isNotEmpty() && Patterns.URL.matcher(input).matches()
+}
+
+fun getFcmToken(): String {
+    var token = ""
+    FirebaseInstanceId.getInstance().instanceId
+        .addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            } else {
+                Log.d("Firebasetoken", task.result?.token.toString())
+                token = task.result?.token.toString()
+            }
+        })
+    return token
+}
+
+fun Context.isNetworkAvailable(): Boolean {
+    val connectivityManager = applicationContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+    return  activeNetwork?.isConnectedOrConnecting == true
 }

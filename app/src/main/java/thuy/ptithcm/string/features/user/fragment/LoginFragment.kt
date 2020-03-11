@@ -1,11 +1,13 @@
 package thuy.ptithcm.string.features.user.fragment
 
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,17 +15,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.fragment_login.*
 import thuy.ptithcm.string.R
+import thuy.ptithcm.string.activity.MainActivity
 import thuy.ptithcm.string.databinding.FragmentLoginBinding
 import thuy.ptithcm.string.features.user.activity.InterestActivity
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
-import thuy.ptithcm.string.utils.AUTHORIZATION
-import thuy.ptithcm.string.utils.hideKeyboard
-import thuy.ptithcm.string.utils.isValidEmail
-import thuy.ptithcm.string.utils.isValidPassword
+import thuy.ptithcm.string.utils.*
 
 class LoginFragment : Fragment(), TextWatcher {
 
@@ -42,13 +40,11 @@ class LoginFragment : Fragment(), TextWatcher {
     }
 
     private var isCheckLogin = false
-    private var fcmToken: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this@LoginFragment
         binding.userViewModel = userViewModel
@@ -58,22 +54,38 @@ class LoginFragment : Fragment(), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getFcmToken()
         bindings()
         addEvent()
     }
 
+//    private fun isNetworkAvailable(): Boolean {
+//        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+//        return  activeNetwork?.isConnectedOrConnecting == true
+//    }
+
     private fun bindings() {
         userViewModel.dataLogin.observe(this, Observer { dataLogin ->
-            if (isCheckLogin)
-                if (dataLogin.data != null) {   // login success
-                    val intent = Intent(context, InterestActivity.getInstance().javaClass)
+            if (isCheckLogin) {
+                progressbarLogin.visibility = View.GONE
+                if (dataLogin.status == true) {   // Login success
+                    // Save login information
+                    context?.setEmail(edt_email_login.text.trim().toString())
+                    context?.setPassword(edt_password_login.text.trim().toString())
+                    dataLogin.data?.id?.let { context?.setUserID(it) }
+                    dataLogin.data?.access_token?.let { context?.setAccessToken(it) }
+                    val intent = Intent(context, MainActivity().javaClass)
                     startActivity(intent)
                     activity?.finish()
-                } else {    //login fail
+                } else {    // Login fail
                     tv_message_login.visibility = View.VISIBLE
                     tv_message_login.text = dataLogin.message
+                    btn_login.isEnabled = true
+                    btn_login.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.colorPurple)
                 }
+                isCheckLogin = false
+            }
         })
     }
 
@@ -89,19 +101,6 @@ class LoginFragment : Fragment(), TextWatcher {
         }
     }
 
-    private fun getFcmToken() {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    return@OnCompleteListener
-                } else {
-                    fcmToken = task.result?.token
-                    Log.d("Firebasetoken", fcmToken.toString())
-                }
-            })
-    }
-
-
     private fun checkLogin() {
         if (!isValidEmail(edt_email_login.text.trim().toString()))
             edt_email_login.error = getString(R.string.err_email_not_valid)
@@ -110,10 +109,14 @@ class LoginFragment : Fragment(), TextWatcher {
         else if (isValidEmail(edt_email_login.text.trim().toString()) &&
             isValidEmail(edt_email_login.text.trim().toString())
         ) {
+            btn_login.isEnabled = false
+            btn_login.backgroundTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.colorGrayEnable)
+            progressbarLogin.visibility = View.VISIBLE
             userViewModel.login(
                 edt_email_login.text.trim().toString(),
                 edt_password_login.text.trim().toString(),
-                AUTHORIZATION + fcmToken
+                FCM_TOKEN + getFcmToken()
             )
             isCheckLogin = true
         }

@@ -36,4 +36,27 @@ interface UserApi {
     fun resendEmailRegister(
         @Field("code") code: String
     ): Call<UserData>
+
+    @GET("profile/{users_id}")
+    fun getUserProfile(
+        @Header("Authorization") authorization: String,
+        @Path("users_id") users_id: Int
+    ): Call<UserData>
+
+    @GET("users-logout")
+    fun logOut(
+        @Header("Authorization") authorization: String
+    ): Call<UserData>
+
+    @FormUrlEncoded
+    @POST("users-change-profile")
+    fun changeProfile(
+        @Field("file") file: String,
+        @Field("username") username: String,
+        @Field("bio") bio: String,
+        @Field("website") website: String,
+        @Field("name") name: String,
+        @Field("date_of_birth") dayOfBirth: String,
+        @Header("Authorization") authorization: String
+    ): Call<UserData>
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/intro1"
+        android:src="@drawable/ic_no_wifi" />
+
+    <TextView
+        style="@style/txtSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin15"
+        android:gravity="center_horizontal|top"
+        android:text="@string/no_internet_connection"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <TextView
+        style="@style/txtHeaderBigGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin15"
+        android:gravity="center_horizontal|top"
+        android:text="@string/text_no_internet" />
+
+    <TextView
+        android:id="@+id/btn_reload_no_wifi"
+        style="@style/txtTileNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="@dimen/margin15"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="@dimen/margin15"
+        android:background="@drawable/bg_stroke_purple_rounded"
+        android:clickable="true"
+        android:gravity="center"
+        android:textColor="@color/colorPurple"
+        android:onClick="openLoginFragment"
+        android:padding="@dimen/padding_btn"
+        android:text="@string/reload_page"
+        android:textAllCaps="true" />
+
+
+</LinearLayout>
