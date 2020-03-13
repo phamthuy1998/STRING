@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".features.user.activity.SettingActivity">
+    android:fitsSystemWindows="true"
+    android:background="@color/colorWhite">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -21,16 +22,18 @@
             <ImageView
                 android:id="@+id/btn_back_setting"
                 android:layout_width="wrap_content"
+                android:onClick="onClickBack"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/button_back"
                 android:padding="10dp"
                 android:src="@drawable/ic_right_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="OnClick" />
 
             <TextView
-                style="@style/txtToolbar"
+                style="@style/txtTitleBig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings"
@@ -58,6 +61,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:onClick="showEditProfileFragment"
                 android:id="@+id/btn_edit_profile"
                 style="@style/txtTileBig"
                 android:layout_width="match_parent"
@@ -66,7 +70,8 @@
                 android:drawableStart="@drawable/ic_user"
                 android:drawableEnd="@drawable/ic_user"
                 android:drawablePadding="@dimen/margin15"
-                android:text="@string/edit_profile" />
+                android:text="@string/edit_profile"
+                tools:ignore="OnClick" />
 
             <TextView
                 android:id="@+id/btn_share_app_with_friends"
@@ -140,13 +145,15 @@
             <TextView
                 android:id="@+id/btn_change_password"
                 style="@style/txtTileBig"
+                android:onClick="showChangePasswordFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin15"
                 android:layout_marginEnd="@dimen/margin15"
                 android:layout_marginBottom="@dimen/margin15"
                 android:drawableEnd="@drawable/ic_arrow_right"
-                android:text="@string/change_password" />
+                android:text="@string/change_password"
+                tools:ignore="OnClick" />
 
             <TextView
                 android:id="@+id/btn_put_notification"

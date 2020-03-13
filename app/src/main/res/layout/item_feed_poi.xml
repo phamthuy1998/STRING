@@ -1,6 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title_poi"
+            style="@style/txtTitleBig"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="@dimen/margin15"
+            android:ellipsize="end"
+            android:maxLines="3" />
+
+        <Button
+            android:id="@+id/btn_string_poi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/button_save_post_selector"
+            android:drawableStart="@drawable/ic_string"
+            android:drawablePadding="@dimen/margin15"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/string"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPurple"
+            android:textSize="15sp"
+            tools:ignore="RelativeOverlap" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_location_poi"
+        style="@style/txtHeaderBigGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:gravity="center" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin15">
+
+
+        <ImageView
+            android:id="@+id/img_post_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/image_post"
+            android:scaleType="centerCrop"
+            android:src="@drawable/grass" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@drawable/gradient_item_interest"
+            android:gravity="top"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_btn">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatar_poi"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/margin15"
+                android:background="@drawable/border_avt"
+                android:padding="1dp"
+                android:src="@drawable/ic_acc_img"
+                app:civ_border_color="@android:color/white"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/txt_username_poi"
+                style="@style/txtTile1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin15"
+                android:drawableEnd="@drawable/ic_star_circle"
+                android:drawablePadding="@dimen/margin15"
+                android:ellipsize="end"
+                android:end="@id/iv_avatar_feed"
+                android:maxLines="2"
+                android:text="@string/username" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin15"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_like_poi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/icon_like"
+            android:src="@drawable/like_selector" />
+
+        <TextView
+            android:id="@+id/tv_like_count_poi"
+            style="@style/txtLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin15"
+            android:end="@id/iv_avatar_feed"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/btn_cmt_poi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/icon_comment"
+            android:src="@drawable/ic_comment" />
+
+        <TextView
+            android:id="@+id/tv_cmt_count_poi"
+            style="@style/txtLike"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin15"
+            android:layout_weight="1"
+            android:end="@id/iv_avatar_feed"
+            android:gravity="start" />
+
+        <ImageView
+            android:id="@+id/btn_show_more_poi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@string/icon_show_more_feed"
+            android:src="@drawable/ic_more" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin15"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="#ECEDEE" />
 </LinearLayout>

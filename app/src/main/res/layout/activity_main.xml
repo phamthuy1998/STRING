@@ -7,8 +7,8 @@
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPagerMain"
+    <FrameLayout
+        android:id="@+id/frm_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -21,7 +21,5 @@
         app:itemIconTint="@drawable/tab_menu_color"
         app:itemTextColor="@drawable/tab_menu_color"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bot_menu_main">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/bot_menu_main"/>
 </LinearLayout>

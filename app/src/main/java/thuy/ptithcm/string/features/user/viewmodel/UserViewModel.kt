@@ -75,7 +75,9 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataUserProfile.value = it
-                }, {})
+                }, {
+
+                })
         )
     }
 
@@ -86,7 +88,9 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataLogout.value = it
-                }, {})
+                }, {
+
+                })
         )
     }
 
@@ -97,7 +101,9 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataResendEmail.value = it
-                }, {})
+                }, {
+
+                })
         )
     }
 
@@ -124,7 +130,9 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataUserChange.value = it
-                }, {})
+                }, {
+
+                })
         )
     }
 
@@ -154,7 +162,9 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataRegister.value = it
-                }, {})
+                }, {
+
+                })
         )
     }
 

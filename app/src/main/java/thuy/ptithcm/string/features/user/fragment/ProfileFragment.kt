@@ -18,7 +18,6 @@ import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_wanderlust_profile.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import thuy.ptithcm.string.R
-import thuy.ptithcm.string.features.user.activity.SettingActivity
 import thuy.ptithcm.string.features.user.model.UserData
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
 import thuy.ptithcm.string.support.MyFragmentPagerAdapter
@@ -98,7 +97,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun bindings() {
-        userViewModel.dataUserProfile.observe(this, Observer { userData ->
+        userViewModel.dataUserProfile.observe(this, Observer<UserData>  { userData ->
             progressbar_profile.visibility = View.GONE
             if (userData != null) {
                 if (userData.status == true)
@@ -131,10 +130,6 @@ class ProfileFragment : Fragment() {
     private fun addEvent() {
         btn_wanderlust.setOnClickListener {
             showBottomDialog()
-        }
-        btn_setting_user.setOnClickListener {
-            val intent = Intent(requireContext(), SettingActivity.getInstance().javaClass)
-            startActivity(intent)
         }
         tv_web.setOnClickListener {
             var url = tv_web.text.trim().toString()

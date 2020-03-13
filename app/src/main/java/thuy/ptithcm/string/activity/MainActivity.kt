@@ -1,20 +1,23 @@
 package thuy.ptithcm.string.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_main.*
 import thuy.ptithcm.string.R
 import thuy.ptithcm.string.features.addmore.fragment.AddMoreFragment
 import thuy.ptithcm.string.features.feed.fragment.FeedFragment
 import thuy.ptithcm.string.features.notification.fragment.NotificationFragment
 import thuy.ptithcm.string.features.search.fragment.SearchFragment
+import thuy.ptithcm.string.features.user.fragment.ChangePasswordFragment
+import thuy.ptithcm.string.features.user.fragment.EditProfileFragment
 import thuy.ptithcm.string.features.user.fragment.ProfileFragment
-import thuy.ptithcm.string.support.MyFragmentPagerAdapter
+import thuy.ptithcm.string.features.user.fragment.SettingFragment
+import thuy.ptithcm.string.utils.isNetworkAvailable
 
-class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         private var instance: MainActivity? = null
@@ -23,13 +26,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
             return instance!!
         }
     }
-
-//
-//    fun runtimeEnableAutoInit() {
-//        // [START fcm_runtime_enable_auto_init]
-//        FirebaseMessaging.getInstance().isAutoInitEnabled = true
-//        // [END fcm_runtime_enable_auto_init]
-//    }
 
     private val feedFragment by lazy {
         FeedFragment.getInstance()
@@ -47,8 +43,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         ProfileFragment.getInstance()
     }
 
-    private val viewPagerAdapter=MyFragmentPagerAdapter(supportFragmentManager)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,35 +51,27 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun inItView() {
-        viewPagerAdapter.addFragment(feedFragment, "Feed fragment")
-        viewPagerAdapter.addFragment(searchFragment, "Search fragment")
-        viewPagerAdapter.addFragment(addFragment, "Add more fragment")
-        viewPagerAdapter.addFragment(notificationFragment, "Notification fragment")
-        viewPagerAdapter.addFragment(profileFragment, "Profile fragment")
-
-        viewPagerMain.adapter = viewPagerAdapter
-        viewPagerMain.addOnPageChangeListener(this)
-
+        showFragment(FeedFragment(), "FeedFragment")
         botNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_feed -> {
-                    viewPagerMain.currentItem = 0
+                    showFragment(feedFragment, "FeedFragment")
                     true
                 }
                 R.id.menu_search -> {
-                    viewPagerMain.currentItem = 1
+                    showFragment(searchFragment, "SearchFragment")
                     true
                 }
                 R.id.menu_add -> {
-                    viewPagerMain.currentItem = 2
+                    showFragment(addFragment, "AddMoreFragment")
                     true
                 }
                 R.id.menu_notification -> {
-                    viewPagerMain.currentItem = 3
+                    showFragment(notificationFragment, "NotificationFragment")
                     true
                 }
                 R.id.menu_profile -> {
-                    viewPagerMain.currentItem = 4
+                    showFragment(profileFragment, "ProfileFragment")
                     true
                 }
                 else -> false
@@ -93,31 +79,46 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
-
+    private fun showFragment(fragment: Fragment, fragmentName: String) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frm_main, fragment)
+            .addToBackStack(fragmentName)
+            .commit()
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    private fun addFragment(fragment: Fragment, fragmentName: String) {
+        if (!fragment.isAdded)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frm_main, fragment)
+                .addToBackStack(fragmentName)
+                .commit()
     }
 
-    override fun onPageSelected(position: Int) {
-        when (position) {
-            0 -> {
-                botNavigation.selectedItemId = R.id.menu_feed
-            }
-            1 -> {
-                botNavigation.selectedItemId = R.id.menu_search
-            }
-            2 -> {
-                botNavigation.selectedItemId = R.id.menu_add
-            }
-            3 -> {
-                botNavigation.selectedItemId = R.id.menu_notification
-            }
-            4 -> {
-                botNavigation.selectedItemId = R.id.menu_profile
-            }
+    fun onClickBack(view: View) {
+        onBackPressed()
+    }
+
+    fun showEditProfileFragment(view: View) {
+        if (!isNetworkAvailable()) {
+            Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
+        } else {
+            addFragment(EditProfileFragment(), "EditProfileFragment")
         }
     }
 
+    fun showChangePasswordFragment(view: View) {
+        if (!isNetworkAvailable()) {
+            Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
+        } else {
+            addFragment(ChangePasswordFragment(), "ChangePasswordFragment")
+        }
+    }
+
+    fun showSettingFragment(view: View) {
+        if (!isNetworkAvailable()) {
+            Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
+        } else {
+            addFragment(SettingFragment.getInstance(), "SettingFragment")
+        }
+    }
 }

@@ -38,12 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin15"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:maxWidth="150dp"
-                android:text="@string/username"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_avatar"
-                app:layout_constraintTop_toTopOf="@id/iv_avatar" />
+                android:maxLines="3"
+                android:text="@string/username" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -94,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true" />
 
         <TextView
             android:layout_width="1dp"

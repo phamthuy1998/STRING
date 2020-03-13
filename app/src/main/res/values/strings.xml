@@ -167,4 +167,12 @@
     <string name="follow_people">Follow People</string>
     <string name="error">Error</string>
     <string name="errLogin">You are logged another device!</string>
+    <string name="save1">Save</string>
+    <string name="time_feed">15 secs ago</string>
+    <string name="location">Location</string>
+    <string name="image_post">Image post</string>
+    <string name="icon_like">Icon like</string>
+    <string name="icon_comment">Icon comment</string>
+    <string name="icon_show_more_feed">Icon show more feed</string>
+    <string name="string">String</string>
 </resources>
