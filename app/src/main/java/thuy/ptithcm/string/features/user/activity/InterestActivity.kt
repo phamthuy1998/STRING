@@ -3,10 +3,12 @@ package thuy.ptithcm.string.features.user.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import thuy.ptithcm.string.R
 import thuy.ptithcm.string.activity.MainActivity
 import thuy.ptithcm.string.features.user.fragment.InterestFragment
+import thuy.ptithcm.string.utils.isNetworkAvailable
 
 class InterestActivity : AppCompatActivity() {
 
@@ -23,17 +25,22 @@ class InterestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interests)
-        supportFragmentManager.beginTransaction()
-            .add(R.id.frm_interest, InterestFragment.getInstance(), "aa")
-            .commit()
+        if (!isNetworkAvailable())
+            Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
+
+        if (!InterestFragment().isAdded)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frm_interest, InterestFragment.getInstance(), "aa")
+                .commit()
     }
 
-    fun clickBackFollow(view: View) { onBackPressed()}
+    fun clickBackFollow(view: View) {
+        onBackPressed()
+    }
 
     fun showMainActivity(view: View) {
         val intent = Intent(this, MainActivity.getInstance().javaClass)
         startActivity(intent)
         finish()
     }
-
 }

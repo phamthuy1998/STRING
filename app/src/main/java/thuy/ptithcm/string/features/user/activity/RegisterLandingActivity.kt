@@ -22,31 +22,32 @@ class RegisterLandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_landing)
         supportFragmentManager.beginTransaction()
-            .add(R.id.frm_landing, LandingFragment.getInstance(), "aa")
+            .add(R.id.frm_landing, LandingFragment.getInstance(), "LandingFragment")
             .commit()
     }
 
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.frm_landing, fragment)
-            .addToBackStack("bb")
-            .commit()
+    private fun showFragment(fragment: Fragment, fragmentName: String) {
+        if (!fragment.isAdded)  // not exist
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frm_landing, fragment)
+                .addToBackStack(fragmentName)
+                .commit()
     }
 
     fun openFragmentSignUpWithEmail(view: View) {
-        showFragment(SignUpEmailFragment.getInstance())
+        showFragment(SignUpEmailFragment.getInstance(), "SignUpEmailFragment")
     }
 
     fun openSignUpFacebookFragment(view: View) {
-        showFragment(SignUpFacebookFragment.getInstance())
+        showFragment(SignUpFacebookFragment.getInstance(), "SignUpFacebookFragment")
     }
 
     fun openLoginFragment(view: View) {
-        showFragment(LoginFragment.getInstance())
+        showFragment(LoginFragment.getInstance(), "LoginFragment")
     }
 
     fun showForgotPasswordFragment(view: View) {
-        showFragment(ForgotPasswordFragment())
+        showFragment(ForgotPasswordFragment(), "ForgotPasswordFragment")
     }
 
     fun onClickButtonBack(view: View) {

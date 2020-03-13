@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +16,8 @@ import thuy.ptithcm.string.features.user.adapter.FollowAdapter
 import thuy.ptithcm.string.features.user.viewmodel.FollowViewModel
 import thuy.ptithcm.string.utils.CURRENT_PER_PAGE
 import thuy.ptithcm.string.utils.getAccessToken
+import thuy.ptithcm.string.utils.isNetworkAvailable
+import thuy.ptithcm.string.utils.showDialogErrorLogin
 
 class FollowFragment : Fragment() {
     companion object {
@@ -52,6 +55,9 @@ class FollowFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!context?.isNetworkAvailable()!!)
+            Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
         progressbar_follow.visibility = View.VISIBLE
         context?.getAccessToken()?.let {
             followViewModel.getUserFollowList(it, page, CURRENT_PER_PAGE.toString())
@@ -103,13 +109,16 @@ class FollowFragment : Fragment() {
         followViewModel.listUserFollow.observe(this, Observer { listUserFollow ->
 
             if (listUserFollow != null) {
-                progressbar_follow.visibility = View.GONE
-                if (isLoadMore) {
-                    listUserFollow.data?.let { followAdapter.upDateStories(it) }
-                    isLoadMore = false
-                } else {
-                    listUserFollow.data?.let { followAdapter.addDataStories(it) }
-                }
+                if (listUserFollow.status == true) {
+                    progressbar_follow.visibility = View.GONE
+                    if (isLoadMore) {
+                        listUserFollow.data?.let { followAdapter.upDateStories(it) }
+                        isLoadMore = false
+                    } else {
+                        listUserFollow.data?.let { followAdapter.addDataStories(it) }
+                    }
+                } else
+                    activity?.showDialogErrorLogin()
             }
         })
 

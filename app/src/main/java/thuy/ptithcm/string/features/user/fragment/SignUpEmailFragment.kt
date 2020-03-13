@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,10 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_register_email.*
 import thuy.ptithcm.string.R
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
-import thuy.ptithcm.string.utils.hideKeyboard
-import thuy.ptithcm.string.utils.isValidEmail
-import thuy.ptithcm.string.utils.isValidPassword
-import thuy.ptithcm.string.utils.isValidUsername
+import thuy.ptithcm.string.utils.*
 import java.util.*
 
 class SignUpEmailFragment : Fragment(), TextWatcher {
@@ -71,10 +69,11 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
                     userViewModel.setEmailRegister(email)
                     dataRegister.data?.code?.let { userViewModel.setCode(it) }
                     // Show verify email fragment
-                    activity!!.supportFragmentManager.beginTransaction()
-                        .add(R.id.frm_landing, VerifyAccFragment.getInstance())
-                        .addToBackStack(null)
-                        .commit()
+                    if (!VerifyAccFragment().isAdded)
+                        activity!!.supportFragmentManager.beginTransaction()
+                            .add(R.id.frm_landing, VerifyAccFragment.getInstance())
+                            .addToBackStack(null)
+                            .commit()
                     isRegisterOk = false
                 } else { // Register fail
                     tv_message_register.visibility = View.VISIBLE
@@ -87,10 +86,11 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
     private fun addEvent() {
         // Show login fragment
         btn_login_in_register.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction()
-                .add(R.id.frm_landing, LoginFragment.getInstance())
-                .addToBackStack("bb")
-                .commit()
+            if (!LoginFragment().isAdded)
+                activity!!.supportFragmentManager.beginTransaction()
+                    .add(R.id.frm_landing, LoginFragment.getInstance())
+                    .addToBackStack("bb")
+                    .commit()
         }
 
         // Add text change listener
@@ -158,7 +158,7 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
         ll_register.setOnClickListener { it.hideKeyboard() }
     }
 
-     private fun showDatetimePicker(editText: EditText) {
+    private fun showDatetimePicker(editText: EditText) {
         var cal = Calendar.getInstance()
         var yyyy = cal.get(Calendar.YEAR)
         var mm = cal.get(Calendar.MONTH)
@@ -200,39 +200,46 @@ class SignUpEmailFragment : Fragment(), TextWatcher {
     }
 
     private fun checkRegister() {
-        if (!isValidEmail(email)) {
-            isRegisterOk = false
-            edt_email_register.error = getString(R.string.err_email_not_valid)
-        }
-        if (!isValidUsername(userName)) {
-            isRegisterOk = false
-            edt_user_name_register.error = getString(R.string.err_username_not_valid)
-        }
-        if (!isValidPassword(password)) {
-            isRegisterOk = false
-            edt_password_register.error = getString(R.string.err_pw_not_valid)
-        }
-        if (confirmPassword != password) {
-            isRegisterOk = false
-            edt_confirm_password_register.error = getString(R.string.err_pw_not_match)
-        }
+        if (!context?.isNetworkAvailable()!!) {
+            Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
+            tv_message_register.visibility = View.VISIBLE
+            tv_message_register.text = getString(R.string.errConnection)
+        } else {
+            tv_message_register.visibility = View.GONE
+            if (!isValidEmail(email)) {
+                isRegisterOk = false
+                edt_email_register.error = getString(R.string.err_email_not_valid)
+            }
+            if (!isValidUsername(userName)) {
+                isRegisterOk = false
+                edt_user_name_register.error = getString(R.string.err_username_not_valid)
+            }
+            if (!isValidPassword(password)) {
+                isRegisterOk = false
+                edt_password_register.error = getString(R.string.err_pw_not_valid)
+            }
+            if (confirmPassword != password) {
+                isRegisterOk = false
+                edt_confirm_password_register.error = getString(R.string.err_pw_not_match)
+            }
 
-        if (isValidEmail(email) && isValidUsername(userName) && isValidPassword(password) && confirmPassword == password) {
-            isRegisterOk = true
-            pb_register_acc_email.visibility = View.VISIBLE
-            Log.d(
-                "aaaa1", userName + "|" +
-                        name + "|" + dayOfBirth + "|" + email + "|" +
-                        password + "|" + confirmPassword
-            )
-            userViewModel.registerAccByEmail(
-                userName,
-                name,
-                dayOfBirth,
-                email,
-                password,
-                confirmPassword
-            )
+            if (isValidEmail(email) && isValidUsername(userName) && isValidPassword(password) && confirmPassword == password) {
+                isRegisterOk = true
+                pb_register_acc_email.visibility = View.VISIBLE
+                Log.d(
+                    "aaaa1", userName + "|" +
+                            name + "|" + dayOfBirth + "|" + email + "|" +
+                            password + "|" + confirmPassword
+                )
+                userViewModel.registerAccByEmail(
+                    userName,
+                    name,
+                    dayOfBirth,
+                    email,
+                    password,
+                    confirmPassword
+                )
+            }
         }
     }
 

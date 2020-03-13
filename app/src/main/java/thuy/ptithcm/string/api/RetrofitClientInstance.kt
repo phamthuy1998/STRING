@@ -46,7 +46,13 @@ class RetrofitClientInstance {
                 call.enqueue(object : Callback<T> {
                     override fun onResponse(call: Call<T>, response: Response<T>) {
                         try {
-                            it.onSuccess(response.body()!!)
+                            Log.d("errrrrr",response.toString() )
+                            Log.d("bbb",response.body().toString() )
+//                            if(response.code()==200){
+                                it.onSuccess(response.body()!!)
+//                            }else{
+//
+//                            }
                         } catch (ex: Exception) {
                             it.onError(ex)
                         }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import thuy.ptithcm.string.features.user.adapter.InterestAdapter
 import thuy.ptithcm.string.features.user.viewmodel.InterestViewModel
 import thuy.ptithcm.string.support.GridItemDecoration
 import thuy.ptithcm.string.utils.getAccessToken
+import thuy.ptithcm.string.utils.isNetworkAvailable
 
 class InterestFragment : Fragment() {
 
@@ -50,10 +52,11 @@ class InterestFragment : Fragment() {
     private var isGetList = false
     private var countMore = 3
     private var count = 0
-//    private var isShowFragmentFollow = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!context?.isNetworkAvailable()!!)
+            Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
         bindings()
         inItView()
         addEvent()
@@ -66,18 +69,32 @@ class InterestFragment : Fragment() {
     }
 
     private fun putInterest() {
-        context?.getAccessToken()?.let {
-            storyAdapter.getListIDInterest()?.let { it1 ->
-                interestViewModel.putListInterest(
-                    it,
-                    it1
-                )
+        if (!context?.isNetworkAvailable()!!) {
+            if (!context?.isNetworkAvailable()!!)
+                Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
+            tv_message_interest.visibility = View.VISIBLE
+            tv_message_interest.text = getString(R.string.errConnection)
+        } else {
+            tv_message_interest.visibility = View.GONE
+            context?.getAccessToken()?.let {
+                storyAdapter.getListIDInterest()?.let { it1 ->
+                    interestViewModel.putListInterest(
+                        it,
+                        it1
+                    )
+                }
             }
+            if (!FollowFragment().isAdded)
+                activity!!.supportFragmentManager.beginTransaction()
+                    .add(R.id.frm_interest, FollowFragment())
+                    .addToBackStack(null)
+                    .commit()
         }
-        activity!!.supportFragmentManager.beginTransaction()
-            .add(R.id.frm_interest, FollowFragment())
-            .addToBackStack(null)
-            .commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tv_message_interest.visibility = View.GONE
     }
 
     private fun itemInterestClick() {

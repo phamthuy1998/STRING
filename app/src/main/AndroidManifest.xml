@@ -4,8 +4,7 @@
     package="thuy.ptithcm.string">
     <!-- Fill email edittext -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--Adding Read External Storage Permission-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Adding Read External Storage Permission -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -18,14 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".features.user.activity.ChangePasswordActivity"></activity>
         <activity
             android:name=".features.user.activity.EditProfileActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".features.intro.activity.IntroActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.LauncherActivity"
             android:screenOrientation="portrait"
@@ -36,19 +34,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".features.user.activity.RegisterLandingActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".features.user.activity.InterestActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".features.user.activity.SettingActivity"
             android:screenOrientation="portrait" />

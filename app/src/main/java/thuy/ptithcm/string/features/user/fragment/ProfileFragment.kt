@@ -1,8 +1,11 @@
 package thuy.ptithcm.string.features.user.fragment
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +22,7 @@ import thuy.ptithcm.string.features.user.activity.SettingActivity
 import thuy.ptithcm.string.features.user.model.UserData
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
 import thuy.ptithcm.string.support.MyFragmentPagerAdapter
-import thuy.ptithcm.string.utils.getAccessToken
-import thuy.ptithcm.string.utils.getUserID
-import thuy.ptithcm.string.utils.setAccessToken
+import thuy.ptithcm.string.utils.*
 
 
 class ProfileFragment : Fragment() {
@@ -49,6 +50,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!context?.isNetworkAvailable()!!)
+            Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
         progressbar_profile.visibility = View.VISIBLE
         if (activity?.getUserID() != -1) {
             activity?.getAccessToken()?.let {
@@ -73,6 +76,8 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if (!context?.isNetworkAvailable()!!)
+            Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
         if (activity?.getUserID() != -1) {
             activity?.getAccessToken()?.let {
                 activity?.getUserID()?.let { it1 ->
@@ -96,7 +101,11 @@ class ProfileFragment : Fragment() {
         userViewModel.dataUserProfile.observe(this, Observer { userData ->
             progressbar_profile.visibility = View.GONE
             if (userData != null) {
-                inItViews(userData)
+                if (userData.status == true)
+                    inItViews(userData)
+                else{
+                    activity?.showDialogErrorLogin()
+                }
             }
         })
     }
@@ -127,8 +136,18 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(), SettingActivity.getInstance().javaClass)
             startActivity(intent)
         }
+        tv_web.setOnClickListener {
+            var url = tv_web.text.trim().toString()
+            if (!url.contains("https://www."))
+                url = "https://www.$url"
+            Log.d("uriiii", url)
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)//https://www.facebook.com/
+            startActivity(intent)
+        }
     }
 
+    @SuppressLint("InflateParams")
     private fun showBottomDialog() {
         val mBottomSheetDialog = RoundedBottomSheetDialog(requireContext())
         val dialog = layoutInflater.inflate(R.layout.dialog_wanderlust_profile, null)

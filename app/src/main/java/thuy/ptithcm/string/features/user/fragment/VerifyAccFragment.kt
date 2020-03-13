@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_verify_acc.*
 import thuy.ptithcm.string.R
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
+import thuy.ptithcm.string.utils.isNetworkAvailable
 
 
 class VerifyAccFragment : Fragment() {
@@ -64,7 +66,7 @@ class VerifyAccFragment : Fragment() {
         })
     }
 
-    private fun showLoginFragment(){
+    private fun showLoginFragment() {
         activity!!.supportFragmentManager.beginTransaction()
             .add(R.id.frm_landing, LoginFragment.getInstance())
             .addToBackStack(null)
@@ -84,15 +86,22 @@ class VerifyAccFragment : Fragment() {
     }
 
     private fun resendEmail() {
-        isResendMail = true
-        progressbar_verify_email.visibility = View.VISIBLE
-        btn_resend_email.isEnabled = false
-        btn_resend_email.setTextColor(
-            ContextCompat.getColorStateList(
-                requireContext(),
-                R.color.colorGrayEnable
+        if (!context?.isNetworkAvailable()!!) {
+            Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
+            tv_message_verify.visibility = View.VISIBLE
+            tv_message_verify.text = getString(R.string.errConnection)
+        } else {
+            tv_message_verify.visibility = View.GONE
+            isResendMail = true
+            progressbar_verify_email.visibility = View.VISIBLE
+            btn_resend_email.isEnabled = false
+            btn_resend_email.setTextColor(
+                ContextCompat.getColorStateList(
+                    requireContext(),
+                    R.color.colorGrayEnable
+                )
             )
-        )
-        userViewModel.getCode()?.let { userViewModel.resendEmailRegister(it) }
+            userViewModel.getCode()?.let { userViewModel.resendEmailRegister(it) }
+        }
     }
 }

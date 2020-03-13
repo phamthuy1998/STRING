@@ -13,6 +13,8 @@ import thuy.ptithcm.string.R
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
 import thuy.ptithcm.string.utils.VERSION_STRING
 import thuy.ptithcm.string.utils.getAccessToken
+import thuy.ptithcm.string.utils.isNetworkAvailable
+import thuy.ptithcm.string.utils.showDialogErrorLogin
 
 class SettingActivity : AppCompatActivity() {
 
@@ -51,11 +53,7 @@ class SettingActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(
-                            this,
-                            "Can't log out!\n ${dataLogout.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showDialogErrorLogin()
                     }
                 }
             }
@@ -71,14 +69,29 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
         btn_log_out.setOnClickListener {
-            progressbar_logout.visibility = View.VISIBLE
-            getAccessToken()?.let { it1 -> userViewModel.logOut(it1) }
-            isLogOut = true
+            if (!isNetworkAvailable()) {
+                Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
+            } else {
+                progressbar_logout.visibility = View.VISIBLE
+                getAccessToken()?.let { it1 -> userViewModel.logOut(it1) }
+                isLogOut = true
+            }
         }
         btn_edit_profile.setOnClickListener {
-            val intent = Intent(this, EditProfileActivity.getInstance().javaClass)
-            startActivity(intent)
+            if (!isNetworkAvailable()) {
+                Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
+            } else {
+                val intent = Intent(this, EditProfileActivity.getInstance().javaClass)
+                startActivity(intent)
+            }
+        }
+        btn_change_password.setOnClickListener {
+            if (!isNetworkAvailable()) {
+                Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
+            } else {
+                val intent = Intent(this, ChangePasswordActivity.getInstance().javaClass)
+                startActivity(intent)
+            }
         }
     }
-
 }

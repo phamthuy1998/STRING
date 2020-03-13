@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import thuy.ptithcm.string.R
 import thuy.ptithcm.string.databinding.FragmentForgotPasswordBinding
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
 import thuy.ptithcm.string.utils.hideKeyboard
+import thuy.ptithcm.string.utils.isNetworkAvailable
 import thuy.ptithcm.string.utils.isValidEmail
 
 
@@ -86,10 +88,11 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun showFragmentLogin() {
-        activity!!.supportFragmentManager.beginTransaction()
-            .replace(R.id.frm_landing, LoginFragment.getInstance())
-            .addToBackStack(null)
-            .commit()
+        if (!LoginFragment().isAdded)
+            activity!!.supportFragmentManager.beginTransaction()
+                .replace(R.id.frm_landing, LoginFragment.getInstance())
+                .addToBackStack(null)
+                .commit()
     }
 
     private fun addEvent() {
@@ -121,14 +124,22 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun sendMail() {
-        if (isValidEmail(edt_email_forgot_pw.text.trim().toString())) {
-            userViewModel.forgotPassword(edt_email_forgot_pw.text.trim().toString())
-            isClickForgotPW = true
-            btn_send_mail.isEnabled = false
-            btn_send_mail.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.colorGrayEnable)
+        if (!context?.isNetworkAvailable()!!) {
+            if (!context?.isNetworkAvailable()!!)
+                Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
+            tv_message_forgot_pw.visibility = View.VISIBLE
+            tv_message_forgot_pw.text = getString(R.string.errConnection)
         } else {
-            edt_email_forgot_pw.error = getString(R.string.err_email_not_valid)
+            tv_message_forgot_pw.visibility = View.GONE
+            if (isValidEmail(edt_email_forgot_pw.text.trim().toString())) {
+                userViewModel.forgotPassword(edt_email_forgot_pw.text.trim().toString())
+                isClickForgotPW = true
+                btn_send_mail.isEnabled = false
+                btn_send_mail.backgroundTintList =
+                    ContextCompat.getColorStateList(requireContext(), R.color.colorGrayEnable)
+            } else {
+                edt_email_forgot_pw.error = getString(R.string.err_email_not_valid)
+            }
         }
     }
 

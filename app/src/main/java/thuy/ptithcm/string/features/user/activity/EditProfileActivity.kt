@@ -1,5 +1,6 @@
 package thuy.ptithcm.string.features.user.activity
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -71,24 +72,28 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            if(data!=null){
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            if (data != null) {
                 iv_avatar_edit.setImageURI(data.data)
-                Log.d("immg",data?.data.toString())
+                Log.d("immg", data.data.toString())
             }
         }
     }
 
     //handle requested permission result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
+                    PackageManager.PERMISSION_GRANTED
+                ) {
                     //permission from popup granted
                     pickImageFromGallery()
-                }
-                else{
+                } else {
                     //permission from popup denied
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
@@ -189,18 +194,24 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun saveEditProfile() {
-        getAccessToken()?.let {
-            userViewModel.changeProfile(
-                file = "",
-                username = edt_user_name_edit.text.trim().toString(),
-                bio = edt_bio_edit.text.trim().toString().replace("\\s+".toRegex(), " "),
-                website = edt_website_edit.text.trim().toString(),
-                name = edt_name_edit.text.trim().toString(),
-                dayOfBirth = edt_day_of_birth_edit.text.trim().toString(),
-                accessToken = it
-            )
+        if (!isNetworkAvailable()) {
+            tv_message_edit_profile.visibility = View.VISIBLE
+            tv_message_edit_profile.text = getString(R.string.errConnection)
+        } else {
+            tv_message_edit_profile.visibility = View.GONE
+            getAccessToken()?.let {
+                userViewModel.changeProfile(
+                    file = "",
+                    username = edt_user_name_edit.text.trim().toString(),
+                    bio = edt_bio_edit.text.trim().toString().replace("\\s+".toRegex(), " "),
+                    website = edt_website_edit.text.trim().toString(),
+                    name = edt_name_edit.text.trim().toString(),
+                    dayOfBirth = edt_day_of_birth_edit.text.trim().toString(),
+                    accessToken = it
+                )
+            }
+            isClickButtonDone = true
         }
-        isClickButtonDone = true
     }
 
     private fun showDatetimePicker() {
@@ -263,7 +274,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
         userViewModel.dataUserProfile.observe(this, Observer { userData ->
             if (userData != null) {
-                inItViews(userData)
+                if (userData.status == true)
+                    inItViews(userData)
+                else
+                    showDialogErrorLogin()
             }
         })
 
