@@ -1,14 +1,12 @@
 package thuy.ptithcm.string.features.user.viewmodel
 
-import android.text.Editable
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import thuy.ptithcm.string.features.user.model.UserData
 import thuy.ptithcm.string.features.user.service.UserApiCaller
+import thuy.ptithcm.string.model.UserData
 
 class UserViewModel : ViewModel() {
     private val compo by lazy { CompositeDisposable() }
@@ -20,12 +18,10 @@ class UserViewModel : ViewModel() {
     val dataUserChange = MutableLiveData<UserData>().apply { value = null }
     val dataResendEmail = MutableLiveData<UserData>().apply { value = null }
     val dataLogout = MutableLiveData<UserData>().apply { value = null }
+    var errorData = MutableLiveData<Boolean>().apply { value = false }
     var email = MutableLiveData<String>().apply { value = "" }
     private var emailRegister = MutableLiveData<String>().apply { value = "" }
     private var code = MutableLiveData<String>().apply { value = "" }
-    fun setEmail(tx: Editable) {
-        email.value = tx.toString()
-    }
 
     fun setEmailRegister(_email: String) {
         emailRegister.value = _email
@@ -50,6 +46,7 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataLogin.value = it
+                    dataLogin.value?.status = false
                 }, {
                     dataLogin.value?.message = it.message
                     dataLogin.value?.status = false
@@ -64,7 +61,8 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataForgotPassword.value = it
-                }, {})
+                }, {
+                })
         )
     }
 
@@ -75,8 +73,9 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataUserProfile.value = it
+                    errorData.value = false
                 }, {
-
+                    errorData.value = true
                 })
         )
     }
@@ -88,8 +87,9 @@ class UserViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     dataLogout.value = it
+                    errorData.value = false
                 }, {
-
+                    errorData.value = true
                 })
         )
     }
@@ -102,7 +102,6 @@ class UserViewModel : ViewModel() {
                 .subscribe({
                     dataResendEmail.value = it
                 }, {
-
                 })
         )
     }
@@ -129,9 +128,10 @@ class UserViewModel : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    errorData.value = false
                     dataUserChange.value = it
                 }, {
-
+                    errorData.value = true
                 })
         )
     }
@@ -144,11 +144,6 @@ class UserViewModel : ViewModel() {
         password: String,
         confirmPassword: String
     ) {
-        Log.d(
-            "aaaa", username + "|" +
-                    name + "|" + dayOfBirth + "|" + email + "|" +
-                    password + "|" + confirmPassword
-        )
         compo.add(
             apiManager.registerAccByEmail(
                 username,
@@ -163,9 +158,11 @@ class UserViewModel : ViewModel() {
                 .subscribe({
                     dataRegister.value = it
                 }, {
-
                 })
         )
     }
 
+    fun isValidate(email: String): Boolean {
+        return email.isNotEmpty()
+    }
 }

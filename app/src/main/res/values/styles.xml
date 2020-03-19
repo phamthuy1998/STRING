@@ -11,6 +11,16 @@
         <item name="android:colorControlHighlight">@color/colorClickAble</item>
     </style>
 
+
+    <style name="ThemePost" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorBlackSignIn</item>
+        <item name="android:colorControlHighlight">@color/colorClickAble</item>
+    </style>
+
+
     <style name="ProfileTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorWhite</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

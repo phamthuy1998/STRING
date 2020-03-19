@@ -18,13 +18,13 @@ class RetrofitClientInstance {
 
         private var retrofit: Retrofit? = null
 
-        val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+        private val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
                 Log.d("API", message)
             }
         }).setLevel(HttpLoggingInterceptor.Level.BASIC)
 
-        var client = OkHttpClient.Builder()
+        private var client = OkHttpClient.Builder()
             .addInterceptor(logging)
             .build()
 
@@ -46,14 +46,12 @@ class RetrofitClientInstance {
                 call.enqueue(object : Callback<T> {
                     override fun onResponse(call: Call<T>, response: Response<T>) {
                         try {
-                            Log.d("errrrrr", response.errorBody().toString())
-                            Log.d("bbb", response.body().toString())
-                            if (response.code() == 200) {
-                                it.onSuccess(response.body()!!)
+                            when (response.code()) {
+                                200 -> {
+                                    it.onSuccess(response.body()!!)
+                                }
+                                401 -> it.onError(Throwable(response.message()))
                             }
-//                            else {
-//                                it.onError(response.errorBody())
-//                            }
                         } catch (ex: Exception) {
                             it.onError(ex)
                         }

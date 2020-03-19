@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/margin15"
             android:layout_marginEnd="28dp"
             android:background="@drawable/ripple_button"
-            android:backgroundTint="@color/colorBlackSignin"
+            android:backgroundTint="@color/colorBlackSignIn"
             android:gravity="center"
             android:onClick="openFragmentSignUpWithEmail"
             android:padding="@dimen/padding_btn"

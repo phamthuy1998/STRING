@@ -82,7 +82,6 @@
     <string name="str_dialog_profile">Let your followers know that you\'re on a trip
         \nright now. We\'ll show interesting places around
         \nyou on your feed.</string>
-    <string name="location">Location</string>
     <string name="hint_location">Enter Location</string>
     <string name="wandalust">Wandalust</string>
     <string name="txtBio">Proud coffee fanatic. Wannabe
@@ -175,4 +174,15 @@
     <string name="icon_comment">Icon comment</string>
     <string name="icon_show_more_feed">Icon show more feed</string>
     <string name="string">String</string>
+    <string name="report">Report</string>
+    <string name="description">Description</string>
+    <string name="current_per_page_image">%1$d/%2$d</string>
+    <string name="time_duration">0:59</string>
+    <string name="comments">Comments</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="postBtn">Post</string>
+    <string name="no_cmt">No comments</string>
+    <string name="txtNoCmt">Be the first to write a comment or
+        \nshare some feedback</string>
+    <string name="reply">Reply</string>
 </resources>

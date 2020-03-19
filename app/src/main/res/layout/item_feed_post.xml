@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_avatar_feed"
+        android:id="@+id/iv_avatar_feed_post"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="@dimen/margin15"
@@ -22,23 +23,26 @@
         style="@style/txtTile1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/iv_avatar_feed"
+        android:layout_alignTop="@id/iv_avatar_feed_post"
         android:layout_marginEnd="@dimen/margin15"
-        android:layout_toEndOf="@id/iv_avatar_feed"
+        android:layout_toEndOf="@id/iv_avatar_feed_post"
         android:drawableEnd="@drawable/ic_star_circle"
         android:drawablePadding="@dimen/margin15"
         android:ellipsize="end"
-        android:end="@id/iv_avatar_feed"
-        android:maxWidth="150dp"
+        android:end="@id/iv_avatar_feed_post"
+        android:maxWidth="170dp"
         android:maxLines="3"
-        android:text="@string/username" />
+        tools:text="@string/username" />
 
     <TextView
+        android:id="@+id/tv_time_post"
         style="@style/txtSmallGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_avatar_feed"
-        android:layout_toEndOf="@id/iv_avatar_feed"
+        android:layout_below="@id/txt_username_feed"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/margin15"
+        android:layout_toEndOf="@id/iv_avatar_feed_post"
         android:gravity="center"
         android:text="@string/time_feed" />
 
@@ -46,9 +50,10 @@
         android:id="@+id/btn_save_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/iv_avatar_feed"
+        android:layout_alignTop="@id/iv_avatar_feed_post"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/button_save_post_selector"
+        android:layout_marginEnd="@dimen/margin15"
+        android:background="@drawable/save_selector"
         android:drawableStart="@drawable/ic_save"
         android:drawablePadding="@dimen/margin15"
         android:gravity="center"
@@ -65,19 +70,21 @@
         style="@style/txtNormal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_avatar_feed"
+        android:layout_below="@+id/tv_time_post"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="@dimen/margin15" />
+        android:layout_marginBottom="@dimen/margin15"
+        tools:text="@string/description" />
 
 
     <LinearLayout
-
         android:id="@+id/ll_image_feed"
         android:layout_width="match_parent"
         android:layout_height="345dp"
         android:layout_below="@id/tv_description_feed"
+        android:layout_marginEnd="@dimen/margin15"
         android:orientation="vertical"
-        android:weightSum="2">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -87,11 +94,12 @@
             <ImageView
                 android:id="@+id/img_post_top"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/image_post"
+                android:foreground="@drawable/bg_rounded"
                 android:scaleType="centerCrop"
-                android:src="@drawable/grass" />
+                tools:src="@drawable/grass" />
 
             <TextView
                 android:id="@+id/tv_location_feed"
@@ -107,6 +115,36 @@
                 android:padding="@dimen/padding_btn"
                 android:text="@string/location"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btn_play_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin15"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:contentDescription="@string/icon_like"
+                android:src="@drawable/ic_play"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_time_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginTop="@dimen/margin15"
+                tools:text="@string/time_duration"
+                android:padding="@dimen/padding_btn"
+                style="@style/txtWhiteSmall"
+                android:background="@drawable/bg_rounded_corner"
+                android:backgroundTint="@color/colorTimeDuration"
+                android:layout_margin="@dimen/margin15"
+                android:contentDescription="@string/icon_like"
+                android:src="@drawable/ic_play"
+                android:visibility="gone"
+                tools:visibility="visible" />
         </FrameLayout>
 
         <TextView
@@ -120,7 +158,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/img_post_left"
@@ -129,10 +167,10 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/image_post"
-                android:scaleType="centerCrop"
-                android:src="@drawable/grass" />
+                android:scaleType="centerCrop" />
 
             <TextView
+                android:id="@+id/line_img_bot"
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
                 android:background="@color/colorWhite" />
@@ -144,15 +182,14 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/image_post"
-                android:scaleType="centerCrop"
-                android:src="@drawable/grass" />
+                android:scaleType="centerCrop" />
         </LinearLayout>
 
     </LinearLayout>
 
 
     <ImageView
-        android:id="@+id/btn_like"
+        android:id="@+id/btn_like_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_image_feed"
@@ -168,21 +205,21 @@
         style="@style/txtLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/btn_like"
-        android:layout_alignBottom="@id/btn_like"
+        android:layout_alignTop="@id/btn_like_post"
+        android:layout_alignBottom="@id/btn_like_post"
         android:layout_marginStart="@dimen/margin15"
-        android:layout_toEndOf="@id/btn_like"
-        android:end="@id/iv_avatar_feed"
+        android:layout_toEndOf="@id/btn_like_post"
+        android:end="@id/iv_avatar_feed_post"
         android:gravity="center" />
 
     <ImageView
-        android:id="@+id/btn_cmt"
+        android:id="@+id/btn_cmt_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_image_feed"
         android:layout_marginStart="60dp"
         android:layout_marginTop="@dimen/margin15"
-        android:layout_toEndOf="@id/btn_like"
+        android:layout_toEndOf="@id/btn_like_post"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:contentDescription="@string/icon_comment"
@@ -193,21 +230,22 @@
         style="@style/txtLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/btn_cmt"
-        android:layout_alignBottom="@id/btn_like"
+        android:layout_alignTop="@id/btn_cmt_post"
+        android:layout_alignBottom="@id/btn_like_post"
         android:layout_marginStart="@dimen/margin15"
-        android:layout_toEndOf="@id/btn_cmt"
-        android:end="@id/iv_avatar_feed"
+        android:layout_toEndOf="@id/btn_cmt_post"
+        android:end="@id/iv_avatar_feed_post"
         android:gravity="center" />
 
     <ImageView
-        android:id="@+id/btn_show_more"
+        android:id="@+id/btn_show_more_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_image_feed"
-        android:layout_alignTop="@id/btn_like"
-        android:layout_alignBottom="@id/btn_like"
+        android:layout_alignTop="@id/btn_like_post"
+        android:layout_alignBottom="@id/btn_like_post"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/margin15"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:contentDescription="@string/icon_show_more_feed"
@@ -216,7 +254,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/btn_like"
+        android:layout_below="@id/btn_like_post"
         android:layout_marginStart="@dimen/margin15"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="@dimen/margin15"

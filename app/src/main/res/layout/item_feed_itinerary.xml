@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin15"
+        android:layout_marginTop="@dimen/margin15"
         android:orientation="horizontal">
 
         <TextView
@@ -23,17 +23,18 @@
             android:maxLines="3"/>
 
         <Button
+            android:layout_marginEnd="@dimen/margin15"
             android:id="@+id/btn_string_itinerary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@drawable/button_save_post_selector"
+            android:background="@drawable/button_shadow"
             android:drawableStart="@drawable/ic_string"
             android:drawablePadding="@dimen/margin15"
             android:gravity="center"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="@string/save1"
+            android:text="@string/string"
             android:textAllCaps="false"
             android:textColor="@color/colorPurple"
             android:textSize="15sp"
@@ -41,6 +42,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/margin15"
         android:id="@+id/rv_itinerary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,6 +51,7 @@
         tools:listitem="@layout/item_itinerary" />
 
     <LinearLayout
+        android:layout_marginEnd="@dimen/margin15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
@@ -73,12 +76,14 @@
             android:drawableEnd="@drawable/ic_star_circle"
             android:drawablePadding="@dimen/margin15"
             android:ellipsize="end"
-            android:end="@id/iv_avatar_feed"
+            android:end="@id/iv_avatar_feed_post"
             android:maxLines="2" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginEnd="@dimen/margin15"
+        android:id="@+id/ll_acc_from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
@@ -95,7 +100,7 @@
             android:src="@drawable/ic_recreate" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_avatar_itinerary_root"
+            android:id="@+id/iv_avatar_itinerary_from"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
@@ -104,16 +109,15 @@
             android:src="@drawable/ic_acc_img" />
 
         <TextView
-            android:id="@+id/txt_username_itinerary_root"
+            android:id="@+id/txt_username_itinerary_from"
             style="@style/txtTileNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin15"
             android:ellipsize="end"
-            android:end="@id/iv_avatar_feed"
+            android:end="@id/iv_avatar_feed_post"
             android:maxLines="2"
             android:textColor="#9597A2" />
-
     </LinearLayout>
 
     <TextView
@@ -123,7 +127,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin15"
         android:layout_marginEnd="@dimen/margin15" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -147,8 +150,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin15"
-            android:end="@id/iv_avatar_feed"
-            android:gravity="center" />
+            android:layout_gravity="center"
+            android:end="@id/iv_avatar_feed_post" />
 
         <ImageView
             android:id="@+id/btn_cmt_itinerary"
@@ -161,14 +164,14 @@
             android:src="@drawable/ic_comment" />
 
         <TextView
+            android:layout_gravity="center"
             android:id="@+id/tv_cmt_count_itinerary"
             style="@style/txtLike"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginStart="@dimen/margin15"
             android:layout_weight="1"
-            android:end="@id/iv_avatar_feed"
+            android:end="@id/iv_avatar_feed_post"
             android:gravity="start" />
 
         <ImageView
@@ -189,4 +192,5 @@
         android:layout_marginTop="21dp"
         android:layout_marginEnd="@dimen/margin15"
         android:background="#ECEDEE" />
+
 </LinearLayout>

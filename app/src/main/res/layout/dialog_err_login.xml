@@ -53,5 +53,4 @@
         android:text="@string/ok"
         android:textColor="#2196F3" />
 
-
 </LinearLayout>

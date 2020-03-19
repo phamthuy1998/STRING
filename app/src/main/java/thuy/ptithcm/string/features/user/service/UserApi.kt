@@ -2,7 +2,7 @@ package thuy.ptithcm.string.features.user.service
 
 import retrofit2.Call
 import retrofit2.http.*
-import thuy.ptithcm.string.features.user.model.UserData
+import thuy.ptithcm.string.model.UserData
 
 interface UserApi {
 

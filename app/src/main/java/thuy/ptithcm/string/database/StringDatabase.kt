@@ -1,11 +1,6 @@
 package thuy.ptithcm.string.database
 
-import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import thuy.ptithcm.string.features.user.model.UserInfo
-import thuy.ptithcm.string.utils.DATABASE_NAME
 
 
 //@Database(entities = [UserInfo::class], version = 2)

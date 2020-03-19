@@ -17,29 +17,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".features.comment.CommentActivity"></activity>
+        <activity android:name=".features.post.PostDetailActivity" />
         <activity
-            android:name=".features.intro.activity.IntroActivity"
+            android:name=".features.intro.IntroActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.LauncherActivity"
+            android:name=".features.main.LauncherActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".features.main.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".features.user.activity.RegisterLandingActivity"
+            android:name=".features.login.RegisterLandingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".features.user.activity.InterestActivity"
+            android:name=".features.interest.InterestActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.user.fragment.ItinerariesFramgent">
+    tools:context=".features.itinerary.ItinerariesFragment">
 
     <include layout="@layout/itineraries_empty" />
 

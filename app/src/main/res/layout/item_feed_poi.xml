@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_marginTop="@dimen/margin15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
+            tools:text="@string/location"
             android:id="@+id/tv_title_poi"
             style="@style/txtTitleBig"
             android:layout_width="0dp"
@@ -24,11 +27,12 @@
             android:maxLines="3" />
 
         <Button
+            android:layout_marginEnd="@dimen/margin15"
             android:id="@+id/btn_string_poi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@drawable/button_save_post_selector"
+            android:background="@drawable/button_shadow"
             android:drawableStart="@drawable/ic_string"
             android:drawablePadding="@dimen/margin15"
             android:gravity="center"
@@ -43,6 +47,8 @@
     </LinearLayout>
 
     <TextView
+        tools:text="@string/time_feed"
+        android:layout_marginEnd="@dimen/margin15"
         android:id="@+id/tv_location_poi"
         style="@style/txtHeaderBigGray"
         android:layout_width="wrap_content"
@@ -57,15 +63,17 @@
 
 
         <ImageView
-            android:id="@+id/img_post_top"
+            android:id="@+id/img_poi"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="345dp"
+            android:layout_marginEnd="@dimen/margin15"
             android:adjustViewBounds="true"
             android:contentDescription="@string/image_post"
             android:scaleType="centerCrop"
-            android:src="@drawable/grass" />
+            tools:src="@drawable/grass" />
 
         <LinearLayout
+            android:layout_marginEnd="@dimen/margin15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -95,9 +103,9 @@
                 android:drawableEnd="@drawable/ic_star_circle"
                 android:drawablePadding="@dimen/margin15"
                 android:ellipsize="end"
-                android:end="@id/iv_avatar_feed"
+                android:end="@id/iv_avatar_feed_post"
                 android:maxLines="2"
-                android:text="@string/username" />
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
 
@@ -122,11 +130,11 @@
         <TextView
             android:id="@+id/tv_like_count_poi"
             style="@style/txtLike"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin15"
-            android:end="@id/iv_avatar_feed"
-            android:gravity="center" />
+            android:end="@id/iv_avatar_feed_post"/>
 
         <ImageView
             android:id="@+id/btn_cmt_poi"
@@ -146,10 +154,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/margin15"
             android:layout_weight="1"
-            android:end="@id/iv_avatar_feed"
+            android:end="@id/iv_avatar_feed_post"
             android:gravity="start" />
 
         <ImageView
+            android:layout_marginEnd="@dimen/margin15"
             android:id="@+id/btn_show_more_poi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

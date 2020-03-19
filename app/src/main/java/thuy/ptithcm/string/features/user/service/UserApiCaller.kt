@@ -3,7 +3,7 @@ package thuy.ptithcm.string.features.user.service
 import android.util.Log
 import io.reactivex.Single
 import thuy.ptithcm.string.api.RetrofitClientInstance
-import thuy.ptithcm.string.features.user.model.UserData
+import thuy.ptithcm.string.model.UserData
 import thuy.ptithcm.string.utils.AUTHORIZATION
 
 class UserApiCaller {

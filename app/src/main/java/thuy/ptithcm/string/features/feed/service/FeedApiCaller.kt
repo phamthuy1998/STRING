@@ -3,8 +3,10 @@ package thuy.ptithcm.string.features.feed.service
 import android.util.Log
 import io.reactivex.Single
 import thuy.ptithcm.string.api.RetrofitClientInstance
-import thuy.ptithcm.string.features.feed.model.FeedData
+import thuy.ptithcm.string.model.DataResult
+import thuy.ptithcm.string.model.FeedData
 import thuy.ptithcm.string.utils.AUTHORIZATION
+import thuy.ptithcm.string.utils.CURRENT_PER_PAGE
 
 class FeedApiCaller {
     private val _apiRestFull: FeedApi by lazy {
@@ -13,32 +15,39 @@ class FeedApiCaller {
 
     fun getFeedList(
         authorization: String,
-        page: Int,
-        currentPerPage: Int
+        page: Int
     ): Single<FeedData> {
         Log.d("AUTHORIZATION", AUTHORIZATION + authorization)
         return RetrofitClientInstance.buildRequest(
             _apiRestFull.getFeedList(
                 AUTHORIZATION + authorization,
                 page,
-                currentPerPage
+                CURRENT_PER_PAGE
             )
         )
     }
 
-    fun getFeedLisat(
+    fun savePost(
         authorization: String,
-        page: Int,
-        currentPerPage: Int
-    ) {
-        Log.d("AUTHORIZATION", AUTHORIZATION + authorization)
-        _apiRestFull.getFeedList(
+        id: Int
+    ): Single<DataResult>  {
+        return RetrofitClientInstance.buildRequest(
+            _apiRestFull.savePost(
             AUTHORIZATION + authorization,
-            page,
-            currentPerPage
-        )
-
+            id
+        ))
     }
 
+    fun likePost(
+        authorization: String,
+        id: Int
+    ): Single<DataResult>  {
+
+        return RetrofitClientInstance.buildRequest(
+            _apiRestFull.likePost(
+            AUTHORIZATION + authorization,
+            id
+        ))
+    }
 
 }

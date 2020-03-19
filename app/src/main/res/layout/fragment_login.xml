@@ -136,13 +136,12 @@
                     android:layout_marginStart="@dimen/margin15"
                     android:layout_marginTop="21dp"
                     android:layout_marginEnd="@dimen/margin15"
-                    android:afterTextChanged="@{(editable)-> userViewModel.setEmail(editable)}"
                     android:background="@color/colorTransparent"
                     android:hint="@string/hint_email"
                     android:importantForAutofill="yes"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:text="@{userViewModel.email}"
+                    android:text="@={userViewModel.email}"
                     android:textAppearance="@style/txInput" />
 
                 <FrameLayout
