@@ -8,39 +8,47 @@ import io.reactivex.schedulers.Schedulers
 import thuy.ptithcm.string.features.feed.service.FeedApiCaller
 import thuy.ptithcm.string.model.DataResult
 import thuy.ptithcm.string.model.Feed
-import thuy.ptithcm.string.model.FeedData
 
 class FeedViewModel : ViewModel() {
-    companion object {
-        private var instance : FeedViewModel? = null
-        fun getInstance() = instance ?: FeedViewModel()
-    }
 
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: FeedApiCaller by lazy { FeedApiCaller() }
-    val feedData = MutableLiveData<FeedData>().apply { value = null }
+    val arrFeed = MutableLiveData<ArrayList<Feed>>().apply { value = arrayListOf() }
     val resultSavePost = MutableLiveData<DataResult>().apply { value = null }
     val resultLikePost = MutableLiveData<DataResult>().apply { value = null }
     var page = MutableLiveData<Int>().apply { value = 1 }
     var errorData = MutableLiveData<Boolean>().apply { value = false }
+    var isLoad = MutableLiveData<Boolean>().apply { value = false }
+    var isOutOfData = MutableLiveData<Boolean>().apply { value = false }
 
-    var feedItem = MutableLiveData<Feed>().apply { value = null }
+
     fun getFeedList(
         accessToken: String,
         _page: Int = 1
     ) {
+        isLoad.value = true
         compo.add(
             apiManager.getFeedList(accessToken, _page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    errorData.value = false
-                    feedData.value = it
+                    if (it.data != null) {
+                        isOutOfData.value = false
+                        errorData.value = false
+                        if (page.value == 1) {
+                            arrFeed.value = it.data
+                        } else {
+                            it?.data.let { it1 -> arrFeed.value?.addAll(it1) }
+                        }
+                        page.value = page.value?.plus(1)
+                        isLoad.value = false
+                    } else isOutOfData.value = true
+
                 }, {
+                    isLoad.value = false
                     errorData.value = true
                 })
         )
-        page.value = page.value?.plus(1)
     }
 
     fun savePost(

@@ -21,7 +21,7 @@ class InterestAdapter(
         val view = LayoutInflater
             .from(viewGroup.context)
             .inflate(R.layout.item_interest, viewGroup, false)
-        return StoryViewHolder(view, itemClick,listInterest)
+        return StoryViewHolder(view, itemClick)
     }
 
     override fun getItemCount(): Int {
@@ -69,9 +69,8 @@ class InterestAdapter(
 
     inner class StoryViewHolder(
         itemView: View,
-        val itemClick: (interest: Interest) -> Unit,
-        private var listInterest: ArrayList<Interest>?
-    ) : BaseViewHolder<Interest>(itemView, listInterest) {
+        val itemClick: (interest: Interest) -> Unit
+    ) : BaseViewHolder<Interest>(itemView) {
         override fun bind(item: Interest, position: Int) {
             Glide.with(itemView)
                 .load(item.photo?.url?.medium)

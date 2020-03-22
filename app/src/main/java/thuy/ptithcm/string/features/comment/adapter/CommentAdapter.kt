@@ -13,7 +13,8 @@ import thuy.ptithcm.string.utils.gone
 import thuy.ptithcm.string.utils.visible
 
 class CommentAdapter(
-    private val onUserTagClick: (userId: Int) -> Unit
+    private val onUserTagClick: (userId: Int) -> Unit,
+    private val onCommentMoreClick: (comment: Comment) -> Unit
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private var listComment: ArrayList<Comment>? = arrayListOf()
@@ -37,15 +38,15 @@ class CommentAdapter(
         }
     }
 
-    fun addFeedData(arrFeed: ArrayList<Comment>) {
-        if (arrFeed.isNotEmpty()) {
+    fun addFeedData(arrFeed: ArrayList<Comment>?) {
+        if (arrFeed != null) {
             listComment = arrFeed
             notifyDataSetChanged()
         }
     }
 
-    fun updateFeedData(arrFeed: ArrayList<Comment>) {
-        if (arrFeed.isNotEmpty()) {
+    fun updateFeedData(arrFeed: ArrayList<Comment>?) {
+        if (arrFeed != null) {
             listComment?.addAll(arrFeed)
             notifyDataSetChanged()
         }
@@ -53,7 +54,7 @@ class CommentAdapter(
 
     inner class CommentViewHolder(
         itemView: View
-    ) : BaseViewHolder<Comment>(itemView, listComment) {
+    ) : BaseViewHolder<Comment>(itemView) {
         override fun bind(item: Comment, position: Int) {
             // Avatar
             Glide.with(itemView)
@@ -65,16 +66,18 @@ class CommentAdapter(
             // Content comment
             itemView.tv_comment_content.text = item.description
 
-            if (item.replyComment != null&&item.replyComment.size!=0) {
+            if (item.replyComment != null && item.replyComment.size != 0) {
                 itemView.rv_comment_reply.visible()
                 val viewPool = RecyclerView.RecycledViewPool()
                 itemView.rv_comment_reply.apply {
                     adapter = ReplyCommentAdapter(item.replyComment, onUserTagClick)
                     setRecycledViewPool(viewPool)
                 }
-            }else{
+            } else {
                 itemView.rv_comment_reply.gone()
             }
+            // Show more listener
+            itemView.btn_show_more_cmt.setOnClickListener { onCommentMoreClick(item) }
         }
     }
 }

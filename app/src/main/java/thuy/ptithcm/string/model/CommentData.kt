@@ -25,7 +25,7 @@ data class ReplyComment(
     val id: Int?,
     val ippID: Int?,
     val replyID: Int?,
-    val tagUsername: ArrayList<String>?= arrayListOf(),
+    val tagUsername: String?,
     val trash: Int?,
     val updated_at: String?,
     val user: UserComment?,
@@ -41,4 +41,15 @@ data class UserComment(
     val profilePhoto: String?,
     val type: String?,
     val username: String?
+)
+
+data class User(
+    val badge: Any,
+    val facebookID: Any,
+    val id: Int,
+    val isLoginFirst: Boolean,
+    val numberOfLogin: Int,
+    val profilePhoto: String,
+    val type: String,
+    val username: String
 )

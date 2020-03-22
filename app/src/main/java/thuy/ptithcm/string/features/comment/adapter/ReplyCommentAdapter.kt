@@ -37,7 +37,7 @@ class ReplyCommentAdapter(
 
     inner class ReplyCommentViewHolder(
         itemView: View
-    ) : BaseViewHolder<ReplyComment>(itemView, listReplyCmt) {
+    ) : BaseViewHolder<ReplyComment>(itemView) {
         override fun bind(item: ReplyComment, position: Int) {
             // Avatar
             Glide.with(itemView)

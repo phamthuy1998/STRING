@@ -9,7 +9,6 @@ import thuy.ptithcm.string.R
 import thuy.ptithcm.string.features.login.RegisterLandingActivity
 import thuy.ptithcm.string.support.MyFragmentPagerAdapter
 import thuy.ptithcm.string.support.ViewPagerListener
-import thuy.ptithcm.string.utils.notFirstTime
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -32,7 +31,6 @@ class IntroActivity : AppCompatActivity() {
 
     private fun addEvent() {
         btn_skip_intro.setOnClickListener {
-            notFirstTime()
             val intent = Intent(this, RegisterLandingActivity.getInstance().javaClass)
             startActivity(intent)
             finish()
@@ -43,7 +41,6 @@ class IntroActivity : AppCompatActivity() {
             if (currentPage < 3)
                 view_pager_intro.currentItem = currentPage
             else {
-                notFirstTime()
                 val intent = Intent(this, RegisterLandingActivity.getInstance().javaClass)
                 startActivity(intent)
                 finish()

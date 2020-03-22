@@ -34,7 +34,7 @@ class CommentApiCaller {
         commentChildID: Int?,
         tagUsername: ArrayList<String>?,
         accessToken: String?
-        ): Single<DataResult> {
+    ): Single<DataResult> {
         return RetrofitClientInstance.buildRequest(
             _apiRestFull.addComment(
                 id,
@@ -42,8 +42,18 @@ class CommentApiCaller {
                 replyID,
                 commentChildID,
                 tagUsername,
-                AUTHORIZATION +accessToken
+                AUTHORIZATION + accessToken
             )
+        )
+    }
+
+    fun deleteComment(
+        cmtId: Int?,
+        feedID: Int?,
+        accessToken: String?
+    ): Single<DataResult> {
+        return RetrofitClientInstance.buildRequest(
+            _apiRestFull.deleteComment(cmtId, feedID, AUTHORIZATION + accessToken)
         )
     }
 

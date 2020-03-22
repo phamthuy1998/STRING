@@ -8,7 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_feed_post.view.*
 import thuy.ptithcm.string.R
-import thuy.ptithcm.string.events.FeedEvents
+import thuy.ptithcm.string.events.TypeFeedEvent
 import thuy.ptithcm.string.model.Feed
 import thuy.ptithcm.string.support.BaseViewHolder
 import thuy.ptithcm.string.support.RoundedCornersTransformation
@@ -20,9 +20,8 @@ import thuy.ptithcm.string.utils.visible
 
 class PostViewHolder(
     itemView: View,
-    private var listFeed: ArrayList<Feed>?,
-    private val feedEvents: FeedEvents
-) : BaseViewHolder<Feed>(itemView, listFeed) {
+    private val events: (id: Int, type: TypeFeedEvent) -> Unit
+) : BaseViewHolder<Feed>(itemView) {
 
     override fun bind(item: Feed, position: Int) {
         if (item.videos != null) {
@@ -181,7 +180,7 @@ class PostViewHolder(
             itemView.tv_cmt_count.invisible()
 
         // Like
-        itemView.btn_like_post.isSelected = item.isLiked!!
+        itemView.btn_like_post.isSelected = item.isLiked?:false
         if (item.likeCounter != 0) {
             itemView.tv_like_count.visible()
             itemView.tv_like_count.text = item.likeCounter.toString()
@@ -194,12 +193,12 @@ class PostViewHolder(
     private fun addEvents(item: Feed, position: Int) {
         //  Button comment click
         itemView.btn_cmt_post.setOnClickListener {
-            item.id?.let { it1 -> feedEvents.onCommentClick(it1) }
+            events.invoke(position, TypeFeedEvent.COMMENT)
         }
 
         //  Button show more
         itemView.btn_show_more_post.setOnClickListener {
-            item.id?.let { it1 -> feedEvents.onShowMoreClick(it1) }
+            events.invoke(position, TypeFeedEvent.SHOW_MORE)
         }
 
         // Button like click listener
@@ -215,8 +214,7 @@ class PostViewHolder(
                 itemView.tv_like_count.text = item.likeCounter.toString()
             } else
                 itemView.tv_like_count.invisible()
-            listFeed?.set(position, item)
-            item.id?.let { it1 -> feedEvents.onLikeClick(it1) }
+            events.invoke(position, TypeFeedEvent.LIKE)
         }
 
         // Button save listener
@@ -248,16 +246,15 @@ class PostViewHolder(
                     itemView.context.getDrawable(R.drawable.ic_save), null, null, null
                 )
             }
-            listFeed?.set(position, item)
-            item.id?.let { it1 -> feedEvents.onSaveClick(it1) }
+            events.invoke(position, TypeFeedEvent.SAVE)
         }
 
         // Image listener
         itemView.ll_image_feed.setOnClickListener {
-            feedEvents.feedItemClick(item, position)
+            events.invoke(position, TypeFeedEvent.ITEM_CLICK)
         }
 
-        itemView.btn_play_video.setOnClickListener { feedEvents.feedItemClick(item, position) }
+        itemView.btn_play_video.setOnClickListener { events.invoke(position, TypeFeedEvent.ITEM_CLICK) }
 
     }
 }

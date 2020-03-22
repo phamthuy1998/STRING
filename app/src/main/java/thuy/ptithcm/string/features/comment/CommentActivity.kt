@@ -1,8 +1,10 @@
 package thuy.ptithcm.string.features.comment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,10 +12,18 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog
 import kotlinx.android.synthetic.main.activity_comment.*
+import kotlinx.android.synthetic.main.dialog_cofirm_comment_del.view.*
+import kotlinx.android.synthetic.main.dialog_comment_more.view.*
+import kotlinx.android.synthetic.main.dialog_user_comment_more.view.*
+import kotlinx.android.synthetic.main.dialog_user_comment_more.view.btn_del_user_cmt
+import org.greenrobot.eventbus.EventBus
 import thuy.ptithcm.string.R
+import thuy.ptithcm.string.events.FeedEvent
 import thuy.ptithcm.string.features.comment.adapter.CommentAdapter
 import thuy.ptithcm.string.features.comment.viewmodel.CommentViewModel
+import thuy.ptithcm.string.model.Comment
 import thuy.ptithcm.string.utils.*
 
 class CommentActivity : AppCompatActivity() {
@@ -25,6 +35,8 @@ class CommentActivity : AppCompatActivity() {
     private val commentAdapter: CommentAdapter by lazy {
         CommentAdapter(onUserTagClick = {
 
+        }, onCommentMoreClick = { comment ->
+            onShowMoreCommentClick(comment)
         })
     }
 
@@ -47,6 +59,59 @@ class CommentActivity : AppCompatActivity() {
         bindings()
         initViews()
         addEvents()
+    }
+
+    private fun onShowMoreCommentClick(comment: Comment) {
+        if (comment.user?.username == getString(USER_NAME)) {
+            // Show dialog
+            val mBottomSheetDialog = RoundedBottomSheetDialog(this)
+            val dialog = layoutInflater.inflate(R.layout.dialog_user_comment_more, null)
+
+            dialog.btn_cacel_user_cmt_more.setOnClickListener {
+                mBottomSheetDialog.dismiss()
+            }
+
+            dialog.btn_del_user_cmt.setOnClickListener {
+                showDialogConfirmDel(comment.id)
+                mBottomSheetDialog.dismiss()
+            }
+
+            mBottomSheetDialog.setContentView(dialog)
+            mBottomSheetDialog.show()
+        } else {
+            // Show dialog
+            val mBottomSheetDialog = RoundedBottomSheetDialog(this)
+            val dialog = layoutInflater.inflate(R.layout.dialog_comment_more, null)
+
+            dialog.btn_cancel_cmt_more.setOnClickListener {
+                mBottomSheetDialog.dismiss()
+            }
+
+            mBottomSheetDialog.setContentView(dialog)
+            mBottomSheetDialog.show()
+        }
+    }
+
+    private fun showDialogConfirmDel(id: Int?) {
+        val mDialogView = LayoutInflater.from(this)
+            .inflate(R.layout.dialog_cofirm_comment_del, null)
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+            .setCancelable(false) //click outside = false
+
+        val mAlertDialog = mBuilder.show()
+        // Del comment
+        mDialogView.btn_del_user_cmt.setOnClickListener {
+            commentViewModel.deleteComment(id, idFeed, getAccessToken())
+            mAlertDialog.dismiss()
+        }
+        mDialogView.btn_cancel_confirm_del_cmt.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
+        mDialogView.btn_cancel_del_cmt.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
+
     }
 
     private fun initViews() {
@@ -108,18 +173,22 @@ class CommentActivity : AppCompatActivity() {
             }
 
         })
-        btn_post_cmt.setOnClickListener { addComment() }
+        btn_post_cmt.setOnClickListener {
+            addComment()
+            it.hideKeyboard()
+        }
     }
 
     private fun addComment() {
-//        commentViewModel.addComment(
-//            idFeed,
-//            edt_comment.getTextTrim(),
-//            replyID,
-//            null,
-//            "",
-//            accessToken
-//        )
+        commentViewModel.addComment(
+            idFeed,
+            edt_comment.getTextTrim(),
+            null,
+            null,
+            null,
+            getAccessToken()
+        )
+        edt_comment.text.clear()
     }
 
     override fun onBackPressed() {
@@ -145,32 +214,27 @@ class CommentActivity : AppCompatActivity() {
         getAccessToken()?.let {
             commentViewModel.getCommentList(accessToken = it, id = idFeed)
         }
+        var feedEvent: FeedEvent
 
         commentViewModel.commentData.observe(this, Observer { commentData ->
-            if (commentData != null) {
-                if (commentData.status) {
-                    ll_no_cmt.gone()
-                    rv_comment.visible()
-                    if (isRefresh) {
-                        commentData.data?.let { commentAdapter.addFeedData(it) }
-                        isRefresh = false
-                    } else {
-                        commentData.data?.let {
-                            commentAdapter.updateFeedData(it)
-                            isLoad = false
-                        }
-                    }
+            if (commentData?.status == true) {
+                ll_no_cmt.gone()
+                rv_comment.visible()
 
-                    if (commentData.data?.size == 0)
-                        isOutOfData = true
-
-                    if (commentData.data?.size == 0 && commentAdapter.itemCount == 0) {
-                        ll_no_cmt.visible()
-                        rv_comment.gone()
-                    }
+                if (isRefresh) {
+                    commentAdapter.addFeedData(commentData.data)
+                    isRefresh = false
                 } else {
-                    rv_comment.gone()
+                    commentAdapter.updateFeedData(commentData.data)
+                    isLoad = false
+                }
+                if (commentData.data?.size == 0)
+                    isOutOfData = true
+
+
+                if (commentData.data?.size == 0 && commentAdapter.itemCount == 0) {
                     ll_no_cmt.visible()
+                    rv_comment.gone()
                 }
             }
         })
@@ -178,6 +242,18 @@ class CommentActivity : AppCompatActivity() {
         commentViewModel.errorData.observe(this, Observer { isErr ->
             if (isErr == true) {
                 showDialogErrorLogin()
+            }
+        })
+
+        commentViewModel.cmtResult.observe(this, Observer { resultAddCmt ->
+            if (resultAddCmt?.status == true) {
+                getAccessToken()?.let {
+                    commentViewModel.getCommentList(accessToken = it, id = idFeed, _page = 1)
+                    commentViewModel.page.value = 1
+                    isRefresh = true
+                    feedEvent = FeedEvent(null, null, commentViewModel.commentData.value?.data?.size?.plus(1))
+                    EventBus.getDefault().post(feedEvent)
+                }
             }
         })
     }

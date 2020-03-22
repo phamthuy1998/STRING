@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_feed_itinerary.view.*
 import thuy.ptithcm.string.R
-import thuy.ptithcm.string.events.FeedEvents
+import thuy.ptithcm.string.events.TypeFeedEvent
 import thuy.ptithcm.string.model.Feed
 import thuy.ptithcm.string.support.BaseViewHolder
 import thuy.ptithcm.string.utils.gone
@@ -15,16 +15,19 @@ import thuy.ptithcm.string.utils.visible
 
 class ItineraryViewHolder(
     itemView: View,
-    private val listFeed: ArrayList<Feed>?,
-    val feedEvents: FeedEvents
-) : BaseViewHolder<Feed>(itemView, listFeed) {
+    private val events: (position: Int, type: TypeFeedEvent) -> Unit
+) : BaseViewHolder<Feed>(itemView) {
 
     override fun bind(item: Feed, position: Int) {
         val viewPool = RecyclerView.RecycledViewPool()
 
         itemView.rv_itinerary.apply {
             layoutManager =
-                LinearLayoutManager(itemView.rv_itinerary.context, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(
+                    itemView.rv_itinerary.context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
             adapter = ItineraryAdapter(item.itineraries)
             setRecycledViewPool(viewPool)
         }
@@ -79,23 +82,22 @@ class ItineraryViewHolder(
                 itemView.tv_like_count_itinerary.text = item.likeCounter.toString()
             } else
                 itemView.tv_like_count_itinerary.invisible()
-            listFeed?.set(position, item)
-            item.id?.let { it1 ->  feedEvents.onLikeClick(it1) }
+            events.invoke(position, TypeFeedEvent.LIKE)
         }
 
         //  Button comment click
         itemView.btn_cmt_itinerary.setOnClickListener {
-            item.id?.let { it1 ->  feedEvents.onCommentClick(it1) }
+            events.invoke(position, TypeFeedEvent.COMMENT)
         }
 
         //  Button show more
         itemView.btn_show_more_itinerary.setOnClickListener {
-            item.id?.let { it1 -> feedEvents.onShowMoreClick(it1) }
+            events.invoke(position, TypeFeedEvent.SHOW_MORE)
         }
 
         // Button String listener
         itemView.btn_string_itinerary.setOnClickListener {
-            item.id?.let { it1 ->  feedEvents.onStringClick(it1) }
+            events.invoke(position, TypeFeedEvent.STRING)
         }
     }
 }

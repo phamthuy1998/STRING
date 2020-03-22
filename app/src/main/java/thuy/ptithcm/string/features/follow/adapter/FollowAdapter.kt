@@ -65,7 +65,7 @@ class FollowAdapter(
     inner class StoryViewHolder(
         itemView: View,
         val userFollow: (userID: Int, checkFollow: Boolean) -> Unit
-    ) : BaseViewHolder<UserInfo>(itemView, listFollows) {
+    ) : BaseViewHolder<UserInfo>(itemView) {
 
         override fun bind(item: UserInfo, position: Int) {
             itemView.btn_follow.isSelected = item.checkfollow ?: false

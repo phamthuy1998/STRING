@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_login.*
 import thuy.ptithcm.string.R
 import thuy.ptithcm.string.databinding.FragmentLoginBinding
+import thuy.ptithcm.string.features.interest.InterestActivity
 import thuy.ptithcm.string.features.main.MainActivity
 import thuy.ptithcm.string.features.user.viewmodel.UserViewModel
 import thuy.ptithcm.string.utils.*
@@ -65,14 +66,24 @@ class LoginFragment : Fragment(), TextWatcher {
                         // Save login information
                         requireContext().setEmail(edt_email_login.getTextTrim())
                         requireContext().setPassword(edt_password_login.getTextTrim())
-                        requireContext().setString(PROFILE_PHOTO,dataLogin.data?.profilePhoto?:"")
+                        requireContext().setString(
+                            PROFILE_PHOTO,
+                            dataLogin.data?.profilePhoto ?: ""
+                        )
+                        requireContext().setString(USER_NAME, dataLogin.data?.username ?: "")
 
                         dataLogin.data?.id?.let { requireContext().setUserID(it) }
                         dataLogin.data?.access_token?.let { requireContext().setAccessToken(it) }
-                        val intent = Intent(context, MainActivity().javaClass)
-//                        val intent = Intent(context, InterestActivity().javaClass)
-                        startActivity(intent)
-                        activity?.finish()
+                        if (requireContext().isFirstTime()) {
+                            requireActivity().notFirstTime()
+                            val intent = Intent(context, InterestActivity().javaClass)
+                            startActivity(intent)
+                            activity?.finish()
+                        } else {
+                            val intent = Intent(context, MainActivity().javaClass)
+                            startActivity(intent)
+                            activity?.finish()
+                        }
                     } else {    // Login fail
                         tv_message_login.visibility = View.VISIBLE
                         tv_message_login.text = dataLogin.message

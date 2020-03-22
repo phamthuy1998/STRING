@@ -14,7 +14,8 @@ interface CommentApi {
         @Query("current_per_page") currentPerPage: Int
     ): Call<CommentData>
 
-    @GET("comment-add")
+    @FormUrlEncoded
+    @POST("comment-add")
     fun addComment(
         @Field("ipps_id") id: Int?,
         @Field("comment") comment: String?,
@@ -22,5 +23,23 @@ interface CommentApi {
         @Field("commentchildID") commentChildID: Int?,
         @Query("tagUsername[]") tagUsername: ArrayList<String>?,
         @Header("Authorization") authentication: String?
-        ): Call<DataResult>
+    ): Call<DataResult>
+
+    @FormUrlEncoded
+    @PUT("comment-edit")
+    fun editComment(
+        @Field("ipps_id") idFeed: Int?,
+        @Field("comment_id") cmtID: Int?,
+        @Field("comment") comment: String?,
+        @Query("tagUsername[]") tagUsername: ArrayList<String>?,
+        @Header("Authorization") authentication: String?
+    ): Call<DataResult>
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "comment-delete", hasBody = true)
+    fun deleteComment(
+        @Field("comment_id") cmtId: Int?,
+        @Field("ipps_id") feedID: Int?,
+        @Header("Authorization") authentication: String?
+    ): Call<DataResult>
 }

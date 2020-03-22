@@ -28,9 +28,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val feedFragment by lazy {
-        FeedFragment.getInstance()
-    }
+    private var count = 0
+
+    private lateinit var feedFragment :FeedFragment
+
     private val searchFragment by lazy {
         SearchFragment.getInstance()
     }
@@ -47,32 +48,44 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        feedFragment = FeedFragment.getInstance()
         inItView()
     }
 
     private fun inItView() {
-        showFragment(FeedFragment(), "FeedFragment")
+        showFragment(FeedFragment())
         botNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_feed -> {
-                    showFragment(feedFragment, "FeedFragment")
+                    count++
+                    if (count == 2){
+                        feedFragment = FeedFragment()
+                        showFragment(feedFragment)
+                        count = 0
+                    }
+                    else {
+                        showFragment(feedFragment)
+                    }
                     true
                 }
                 R.id.menu_search -> {
-                    showFragment(searchFragment, "SearchFragment")
+                    count = 0
+                    showFragment(searchFragment)
                     true
                 }
                 R.id.menu_add -> {
-                    showFragment(addFragment, "AddMoreFragment")
+                    count = 0
+                    showFragment(addFragment)
                     true
                 }
                 R.id.menu_notification -> {
-                    showFragment(notificationFragment, "NotificationFragment")
+                    count = 0
+                    showFragment(notificationFragment)
                     true
                 }
                 R.id.menu_profile -> {
-                    showFragment(profileFragment, "ProfileFragment")
+                    count = 0
+                    showFragment(profileFragment)
                     true
                 }
                 else -> false
@@ -80,20 +93,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showFragment(fragment: Fragment, fragmentName: String) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frm_main, fragment)
-            .addToBackStack(fragmentName)
-            .commit()
+    private fun removeFragment(fragment: Fragment, fragmentName: String? = null){
+
     }
 
-    private fun addFragment(fragment: Fragment, fragmentName: String) {
-        if (!fragment.isAdded)
+    private fun showFragment(fragment: Fragment, fragmentName: String? = null) {
+        if (fragmentName == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.frm_main, fragment)
+                .replace(R.id.frm_main, fragment)
+                .commit()
+        } else
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.frm_main, fragment)
                 .addToBackStack(fragmentName)
                 .commit()
+
     }
+
+//    private fun addFragment(fragment: Fragment, fragmentName: String) {
+//        if (!fragment.isAdded)
+//            supportFragmentManager.beginTransaction()
+//                .add(R.id.frm_main, fragment)
+//                .addToBackStack(fragmentName)
+//                .commit()
+//    }
 
     fun onClickBack(view: View) {
         onBackPressed()
@@ -103,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         if (!isNetworkAvailable()) {
             Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
         } else {
-            addFragment(EditProfileFragment(), "EditProfileFragment")
+            showFragment(EditProfileFragment(), "EditProfileFragment")
         }
     }
 
@@ -111,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         if (!isNetworkAvailable()) {
             Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
         } else {
-            addFragment(ChangePasswordFragment(), "ChangePasswordFragment")
+            showFragment(ChangePasswordFragment(), "ChangePasswordFragment")
         }
     }
 
@@ -119,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         if (!isNetworkAvailable()) {
             Toast.makeText(this, R.string.errConnection, Toast.LENGTH_LONG).show()
         } else {
-            addFragment(SettingFragment.getInstance(), "SettingFragment")
+            showFragment(SettingFragment.getInstance(), "SettingFragment")
         }
     }
 }

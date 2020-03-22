@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import thuy.ptithcm.string.R
-import thuy.ptithcm.string.events.FeedEvents
+import thuy.ptithcm.string.events.TypeFeedEvent
 import thuy.ptithcm.string.model.Feed
 import thuy.ptithcm.string.support.BaseViewHolder
 import thuy.ptithcm.string.utils.ITINERARY
@@ -12,7 +12,7 @@ import thuy.ptithcm.string.utils.POI
 import thuy.ptithcm.string.utils.POST
 
 class FeedAdapter(
-    private val feedEvents: FeedEvents
+    private val events: (position: Int, type: TypeFeedEvent)-> Unit
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private var listFeed: ArrayList<Feed>? = arrayListOf()
@@ -29,17 +29,17 @@ class FeedAdapter(
             TYPE_POST -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.item_feed_post, viewGroup, false)
-                PostViewHolder(view, listFeed, feedEvents)
+                PostViewHolder(view, events)
             }
             TYPE_POI -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.item_feed_poi, viewGroup, false)
-                PoiViewHolder(view, listFeed, feedEvents)
+                PoiViewHolder(view, events)
             }
             TYPE_ITINERARY -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.item_feed_itinerary, viewGroup, false)
-                ItineraryViewHolder(view, listFeed, feedEvents)
+                ItineraryViewHolder(view, events)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
@@ -49,8 +49,8 @@ class FeedAdapter(
         return listFeed?.size ?: 0
     }
 
-    fun addFeedData(arrFeed: ArrayList<Feed>) {
-        if (arrFeed.isNotEmpty()) {
+    fun addFeedData(arrFeed: ArrayList<Feed>?) {
+        if (arrFeed != null && arrFeed.size > 0) {
             listFeed = arrFeed
             notifyDataSetChanged()
         }

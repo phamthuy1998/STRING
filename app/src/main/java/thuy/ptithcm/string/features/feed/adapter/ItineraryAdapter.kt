@@ -39,7 +39,7 @@ class ItineraryAdapter(
 
     inner class ItemItineraryViewHolder(
         itemView: View
-    ) : BaseViewHolder<Itinerary>(itemView, listItinerary) {
+    ) : BaseViewHolder<Itinerary>(itemView) {
 
         override fun bind(item: Itinerary, position: Int) {
 

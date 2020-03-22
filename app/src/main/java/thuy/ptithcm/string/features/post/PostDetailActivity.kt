@@ -1,5 +1,6 @@
 package thuy.ptithcm.string.features.post
 
+import android.content.Intent
 import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
@@ -11,11 +12,19 @@ import com.bumptech.glide.Glide
 import com.deishelon.roundedbottomsheet.RoundedBottomSheetDialog
 import kotlinx.android.synthetic.main.activity_post_detail.*
 import kotlinx.android.synthetic.main.dialog_show_more_feed.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import thuy.ptithcm.string.R
+import thuy.ptithcm.string.events.FeedEvent
+import thuy.ptithcm.string.features.comment.CommentActivity
 import thuy.ptithcm.string.features.feed.viewmodel.FeedViewModel
 import thuy.ptithcm.string.model.Feed
 import thuy.ptithcm.string.support.ImageAdapter
-import thuy.ptithcm.string.utils.*
+import thuy.ptithcm.string.utils.getAccessToken
+import thuy.ptithcm.string.utils.gone
+import thuy.ptithcm.string.utils.invisible
+import thuy.ptithcm.string.utils.visible
 
 
 class PostDetailActivity : AppCompatActivity() {
@@ -29,6 +38,7 @@ class PostDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
         feed = intent.getParcelableExtra<Feed>("feed")
+        EventBus.getDefault().register(this)
         bindings()
         initViews()
         addEvents()
@@ -51,10 +61,15 @@ class PostDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun setData(){
-        setBoolean(IS_LIKE, feed?.isLiked ?: false)
-        setInt(LIKE_COUNTER, feed?.likeCounter ?: 0)
-        setInt(COMMENT_COUNTER, feed?.commentCounter ?: 0)
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onFeedItemEvent(feedEvent: FeedEvent) {
+        tv_cmt_count_post_detail.text = feedEvent.commentCounter.toString()
+    }
+
+
+    private fun setData() {
+        val feedEvent = FeedEvent(feed?.isLiked, feed?.likeCounter, feed?.commentCounter)
+        EventBus.getDefault().post(feedEvent)
     }
 
     override fun onBackPressed() {
@@ -103,15 +118,23 @@ class PostDetailActivity : AppCompatActivity() {
             mBottomSheetDialog.setContentView(dialog)
             mBottomSheetDialog.show()
         }
+
+        btn_cmt_post_detail.setOnClickListener {
+            val intent = Intent(this, CommentActivity().javaClass)
+            intent.putExtra("ID_Feed", feed?.id)
+            startActivity(intent)
+        }
+
     }
+
 
     private fun initViews() {
         if (feed != null) {
             //Show video
             if (feed?.videos != null) {
                 tv_image_count.gone()
-                video_post.visible()
                 view_pager_post_detail.gone()
+                video_post.visible()
                 val video: Uri = Uri.parse(feed?.videos?.url ?: "")
                 video_post.setVideoURI(video)
                 video_post.setOnPreparedListener(OnPreparedListener { mp ->
@@ -121,10 +144,11 @@ class PostDetailActivity : AppCompatActivity() {
             }
             // Show image
             else {
+                video_post.gone()
                 tv_image_count.visible()
                 view_pager_post_detail.visible()
-                video_post.gone()
-                view_pager_post_detail.adapter = ImageAdapter(this, feed?.photos, tv_image_count)
+                view_pager_post_detail.adapter =
+                    ImageAdapter(this, feed?.photos, tv_image_count)
             }
 
             // Set image avatar
@@ -136,13 +160,14 @@ class PostDetailActivity : AppCompatActivity() {
             txt_username_post_detail.text = feed?.user?.username
 
             // Like
-            btn_like_post_detail.isSelected = feed?.isLiked!!
+            btn_like_post_detail.isSelected = feed?.isLiked ?: false
             if (feed?.likeCounter != 0) {
                 tv_like_post_detail.visible()
                 tv_like_post_detail.text = feed?.likeCounter.toString()
             } else
                 tv_like_post_detail.invisible()
 
+            tv_cmt_count_post_detail.text = feed?.commentCounter.toString()
         }
     }
 }

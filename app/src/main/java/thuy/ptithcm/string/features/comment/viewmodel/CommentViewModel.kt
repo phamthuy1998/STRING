@@ -13,7 +13,7 @@ class CommentViewModel : ViewModel() {
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: CommentApiCaller by lazy { CommentApiCaller() }
     val commentData = MutableLiveData<CommentData>().apply { value = null }
-    val cmtAddResult = MutableLiveData<DataResult>().apply { value = null }
+    val cmtResult = MutableLiveData<DataResult>().apply { value = null }
     var page = MutableLiveData<Int>().apply { value = 1 }
     var errorData = MutableLiveData<Boolean>().apply { value = false }
 
@@ -50,11 +50,29 @@ class CommentViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     errorData.value = false
-                    cmtAddResult.value = it
+                    cmtResult.value = it
                 }, {
                     errorData.value = true
                 })
         )
         page.value = page.value?.plus(1)
+    }
+
+    fun deleteComment(
+        cmtId: Int?,
+        feedID: Int?,
+        accessToken: String?
+    ) {
+        compo.add(
+            apiManager.deleteComment(cmtId, feedID, accessToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    errorData.value = false
+                    cmtResult.value = it
+                }, {
+                    errorData.value = true
+                })
+        )
     }
 }

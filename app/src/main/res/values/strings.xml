@@ -185,4 +185,7 @@
     <string name="txtNoCmt">Be the first to write a comment or
         \nshare some feedback</string>
     <string name="reply">Reply</string>
+    <string name="edit">Edit</string>
+    <string name="textConfirmDelCmt">Are you sure you want to delete this
+        \ncomment permanently</string>
 </resources>

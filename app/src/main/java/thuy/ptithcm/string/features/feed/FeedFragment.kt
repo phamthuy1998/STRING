@@ -17,33 +17,72 @@ import kotlinx.android.synthetic.main.dialog_show_more_feed.view.*
 import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.no_feed.*
 import kotlinx.android.synthetic.main.no_internet.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import thuy.ptithcm.string.R
-import thuy.ptithcm.string.events.FeedEvents
+import thuy.ptithcm.string.events.FeedEvent
+import thuy.ptithcm.string.events.TypeFeedEvent
 import thuy.ptithcm.string.features.comment.CommentActivity
 import thuy.ptithcm.string.features.feed.adapter.FeedAdapter
 import thuy.ptithcm.string.features.feed.viewmodel.FeedViewModel
 import thuy.ptithcm.string.features.post.PostDetailActivity
-import thuy.ptithcm.string.model.Feed
 import thuy.ptithcm.string.utils.*
 
 
-class FeedFragment : Fragment(), FeedEvents {
+class FeedFragment : Fragment() {
 
     companion object {
         private var instance: FeedFragment? = null
         private var positionItem: Int = 0
-        private var isClickItem = false
-
-        private var isRefresh: Boolean = false
-        private var isLoad: Boolean = false
-        private var isOutOfData: Boolean = false
 
         fun getInstance() = instance ?: FeedFragment()
     }
 
 
     private val feedAdapter: FeedAdapter by lazy {
-        FeedAdapter(this)
+        FeedAdapter(this::feedEvents)
+    }
+
+    private fun feedEvents(position: Int, type: TypeFeedEvent) {
+
+        when (type) {
+            TypeFeedEvent.SAVE -> {
+                activity?.getAccessToken()
+                    ?.let { feedViewModel.savePost(accessToken = it, id = id) }
+            }
+
+            TypeFeedEvent.STRING -> {
+            }
+
+            TypeFeedEvent.STRING_POI -> {
+            }
+
+            TypeFeedEvent.LIKE -> {
+                activity?.getAccessToken()
+                    ?.let {
+                        feedViewModel.likePost(
+                            accessToken = it,
+                            id = feedViewModel.arrFeed.value?.get(position)?.id ?: 0
+                        )
+                    }
+                feedViewModel.arrFeed.value?.get(position)?.isLiked =
+                    !(feedViewModel.arrFeed.value?.get(position)?.isLiked ?: false)
+            }
+
+            TypeFeedEvent.COMMENT -> {
+                onCommentClick(position)
+            }
+
+            TypeFeedEvent.SHOW_MORE -> {
+                onShowMoreClick(position)
+            }
+
+            TypeFeedEvent.ITEM_CLICK -> {
+                feedItemClick(position)
+            }
+
+        }
     }
 
     private val feedViewModel: FeedViewModel by lazy {
@@ -54,33 +93,22 @@ class FeedFragment : Fragment(), FeedEvents {
         LinearLayoutManager(requireContext())
     }
 
-    override fun onSaveClick(id: Int) {
-        activity?.getAccessToken()?.let { feedViewModel.savePost(accessToken = it, id = id) }
-    }
-
-    override fun onStringClick(id: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onLikeClick(id: Int) {
-        activity?.getAccessToken()?.let { feedViewModel.likePost(accessToken = it, id = id) }
-    }
-
-    override fun onCommentClick(id: Int) {
+    private fun onCommentClick(position: Int) {
+        positionItem = position
         val intent = Intent(requireContext(), CommentActivity().javaClass)
-        intent.putExtra("ID_Feed", id)
+        intent.putExtra("ID_Feed", feedViewModel.arrFeed.value?.get(position)?.id)
         startActivity(intent)
     }
 
-    override fun feedItemClick(feed: Feed, position: Int) {
-        isClickItem = true
+    private fun feedItemClick(position: Int) {
         positionItem = position
+        val feed = feedViewModel.arrFeed.value?.get(position)
         val intent = Intent(requireContext(), PostDetailActivity().javaClass)
         intent.putExtra("feed", feed)
         startActivity(intent)
     }
 
-    override fun onShowMoreClick(id: Int) {
+    private fun onShowMoreClick(id: Int) {
         // Show dialog
         val mBottomSheetDialog = RoundedBottomSheetDialog(requireContext())
         val dialog = layoutInflater.inflate(R.layout.dialog_show_more_feed, null)
@@ -91,6 +119,11 @@ class FeedFragment : Fragment(), FeedEvents {
 
         mBottomSheetDialog.setContentView(dialog)
         mBottomSheetDialog.show()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
     }
 
     override fun onCreateView(
@@ -114,21 +147,27 @@ class FeedFragment : Fragment(), FeedEvents {
         addEvents()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (isClickItem) {
-            val feed = feedViewModel.feedData.value?.data?.get(positionItem)
-            feed?.isLiked = requireContext().getBoolean(IS_LIKE)
-            feed?.likeCounter = requireActivity().getInt(LIKE_COUNTER)
-            feed?.commentCounter = requireActivity().getInt(COMMENT_COUNTER)
-            feed?.let { feedViewModel.feedData.value?.data?.set(positionItem, it) }
-            feedAdapter.notifyItemChanged(positionItem)
-            isClickItem = false
-        }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onFeedItemEvent(feedEvent: FeedEvent) {
+        val feed = feedViewModel.arrFeed.value?.get(positionItem)
+        if (feedEvent.isLike != null)
+            feed?.isLiked = feedEvent.isLike
+        if (feedEvent.likeCounter != null)
+            feed?.likeCounter = feedEvent.likeCounter
+        if (feedEvent.commentCounter != null)
+            feed?.commentCounter = feedEvent.commentCounter
+        feed?.let { feedViewModel.arrFeed.value?.set(positionItem, it) }
+        feedAdapter.notifyItemChanged(positionItem)
     }
 
     private fun initViews() {
-        rv_feed.layoutManager = mLayoutManager
         rv_feed.adapter = feedAdapter
     }
 
@@ -146,23 +185,16 @@ class FeedFragment : Fragment(), FeedEvents {
         var totalItemCount: Int
         rv_feed.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) //check for scroll down
-                {
-                    if (!isLoad && !isOutOfData) {
-                        visibleItemCount = mLayoutManager.childCount
-                        totalItemCount = mLayoutManager.itemCount
-                        pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition()
-                        if (visibleItemCount + pastVisibleItems >= totalItemCount - 5) {
-                            isLoad = true
-                            // Get list of feed
-                            activity?.getAccessToken()
-                                ?.let {
-                                    feedViewModel.getFeedList(
-                                        it,
-                                        feedViewModel.page.value ?: 1
-                                    )
-                                }
-                        }
+                if (dy > 0 && feedViewModel.isLoad.value == false && feedViewModel.isOutOfData.value == false) {
+                    visibleItemCount = mLayoutManager.childCount
+                    totalItemCount = mLayoutManager.itemCount
+                    pastVisibleItems = mLayoutManager.findFirstVisibleItemPosition()
+                    if (visibleItemCount + pastVisibleItems >= totalItemCount - 5) {
+                        // Get list of feed
+                        feedViewModel.getFeedList(
+                            activity?.getAccessToken() ?: "",
+                            feedViewModel.page.value ?: 1
+                        )
                     }
                 }
             }
@@ -178,40 +210,33 @@ class FeedFragment : Fragment(), FeedEvents {
             Toast.makeText(requireContext(), R.string.errConnection, Toast.LENGTH_LONG).show()
             feed_no_wifi.visible()
         } else {
-            isRefresh = true
             feed_no_wifi.gone()
-            activity?.getAccessToken()?.let {
-                feedViewModel.getFeedList(it)
-            }
             feedViewModel.page.value = 1
+            activity?.getAccessToken()?.let {
+                feedViewModel.getFeedList(it, feedViewModel.page.value ?: 1)
+            }
         }
     }
 
     private fun bindings() {
+
         activity?.getAccessToken()?.let {
-            feedViewModel.getFeedList(it)
+            feedViewModel.getFeedList(it, feedViewModel.page.value ?: 1)
         }
+
+        // Login in another device
         feedViewModel.errorData.observe(this, Observer { isErr ->
             if (isErr == true) {
                 showDialogErrorLogin()
             }
         })
-        feedViewModel.feedData.observe(this, Observer { feedData ->
-            if (feedData != null) {
+
+        feedViewModel.arrFeed.observe(this, Observer { arrFeed ->
+            if (arrFeed != null) {
                 layout_no_feed.gone()
-                if (isRefresh) {
-                    feedData.data?.let { feedAdapter.addFeedData(it) }
-                    isRefresh = false
-                } else {
-                    feedData.data?.let {
-                        feedAdapter.updateFeedData(it)
-                        isLoad = false
-                    }
-                }
-                if (feedData.data?.size == 0) {
-                    isOutOfData = true
-                    Toast.makeText(requireContext(), "Out of data!", Toast.LENGTH_LONG).show()
-                }
+                feedAdapter.addFeedData(arrFeed)
+            } else {
+                layout_no_feed.visible()
             }
         })
 
@@ -224,11 +249,9 @@ class FeedFragment : Fragment(), FeedEvents {
         })
 
         feedViewModel.resultLikePost.observe(this, Observer { data ->
-            if (data != null) Toast.makeText(
-                requireContext(),
-                data.message,
-                Toast.LENGTH_SHORT
-            ).show()
+            if (data?.status == true) {
+                Toast.makeText(requireContext(), data.message, Toast.LENGTH_SHORT).show()
+            }
         })
     }
 }
